@@ -1,5 +1,5 @@
 # group-game-2025_java_p3_team_7
 group-game-2025_java_p3_team_7 created by GitHub Classroom
 Chris Paek
-Justin De La Cruz
+Justin Dela Cruz
 Logan Park
