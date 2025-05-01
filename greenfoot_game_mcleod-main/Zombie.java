@@ -38,7 +38,7 @@ public class Zombie extends Actor {
             moving = false;
             moveDuration = MOVE_DURATION;
         }
-        
+                            
         if (stopDuration == 0) {
             moving = true;
             stopDuration = STOP_DURATION;
