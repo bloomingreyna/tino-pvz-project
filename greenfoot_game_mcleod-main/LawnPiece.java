@@ -1,0 +1,34 @@
+import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+
+/**
+ * Write a description of class LawnPiece here.
+ * 
+ * @author (your name) 
+ * @version (a version number or a date)
+ */
+public class LawnPiece extends Actor
+{
+    /**
+     * Act - do whatever the LawnPiece wants to do. This method is called whenever
+     * the 'Act' or 'Run' button gets pressed in the environment.
+     */
+    
+    public LawnPiece() {
+        getImage().scale(100,100);
+        
+    }
+    public void act()
+    {
+        // Add your action code here.
+    }
+    public void setTileColor(int num) {
+        if (num == 1) {
+            setImage("green_square.png");
+            getImage().scale(100,100);
+        }
+        if (num == -1) {
+            setImage("light_green_square.png");
+            getImage().scale(100,100);
+        }
+    }
+}
