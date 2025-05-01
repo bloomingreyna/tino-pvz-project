@@ -18,6 +18,6 @@ public class Sunflower extends Plant
     public void act()
     {
         // Add your action code here.
-        
+        super.act();
     }
 }

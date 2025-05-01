@@ -17,6 +17,9 @@ public class Plant extends Actor
     public void act()
     {
         // Add your action code here.
+        if (health <= 0) {
+            getWorld().removeObject(this);
+        }
     }
     
     public void setHealth(int health){
