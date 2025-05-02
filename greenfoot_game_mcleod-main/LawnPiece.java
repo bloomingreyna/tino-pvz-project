@@ -13,10 +13,6 @@ public class LawnPiece extends Actor
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     
-    public LawnPiece() {
-        getImage().scale(100,100);
-        
-    }
     public void act()
     {
         // Add your action code here.
@@ -24,11 +20,10 @@ public class LawnPiece extends Actor
     public void setTileColor(int num) {
         if (num == 1) {
             setImage("darker_grass.png");
-            getImage().scale(100,100);
         }
         if (num == -1) {
             setImage("lighter_grass.png");
-            getImage().scale(100,100);
         }
+        getImage().scale(95, 110);
     }
 }
