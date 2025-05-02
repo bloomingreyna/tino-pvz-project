@@ -16,14 +16,14 @@ public class Plant extends Actor
     int health = 300;
     public void act()
     {
-        // Add your action code here.
-        if (health <= 0) {
-            getWorld().removeObject(this);
-        }
+        
     }
     
     public void setHealth(int health){
         this.health = health;
+        if (this.health <= 0) {
+            getWorld().removeObject(this);
+        }
     }
     
     public int getHealth(){
