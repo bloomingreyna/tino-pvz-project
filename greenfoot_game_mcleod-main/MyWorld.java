@@ -1,5 +1,5 @@
 import greenfoot.*;
-
+import java.util.Random;
 public class MyWorld extends World {
     public MyWorld() {
         super(950, 600, 1, false);
@@ -13,5 +13,19 @@ public class MyWorld extends World {
                 
             }
         }
+        
+    }
+    int count = 0;
+    public void act() {
+        //spawns in sun at random point on top border every 10 seconds if fps 60
+        
+        if (count == 600) {
+            Random rand = new Random();
+            int randX = rand.nextInt(getWidth());
+            Sun sun = new Sun();
+            addObject(sun, randX, 0);
+            count = 0;
+        }
+        count++;
     }
 }

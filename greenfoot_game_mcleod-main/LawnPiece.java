@@ -23,11 +23,11 @@ public class LawnPiece extends Actor
     }
     public void setTileColor(int num) {
         if (num == 1) {
-            setImage("green_square.png");
+            setImage("darker_grass.png");
             getImage().scale(100,100);
         }
         if (num == -1) {
-            setImage("light_green_square.png");
+            setImage("lighter_grass.png");
             getImage().scale(100,100);
         }
     }
