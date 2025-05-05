@@ -1,9 +1,12 @@
 import greenfoot.*;
 import java.util.Random;
 import java.util.List;
+import java.lang.reflect.InvocationTargetException;
+
 public class MyWorld extends World {
     public static int mouseRow = -1;
     public static int mouseCol = -1;
+    public static SeedSlot selectedSlot = null;
     
     public MyWorld() {
         super(950, 600, 1, false);
@@ -14,6 +17,38 @@ public class MyWorld extends World {
     public void act() {
         updateMousePosition();
         spawnSun();
+        placePlant();
+    }
+    
+    private void placePlant() {
+        if (selectedSlot != null) {
+            LawnPiece tile = getTileAtMouse();
+            if (tile != null && Greenfoot.mouseClicked(null)) {
+                try {
+                    MouseInfo mouse = Greenfoot.getMouseInfo();
+                    Plant p = (Plant) selectedSlot.getPlant().newInstance(mouseRow, mouseCol);
+                    addObject(p, mouse.getX(), mouse.getY());
+                } catch (InstantiationException x) {
+        	    x.printStackTrace();
+        	} catch (IllegalAccessException x) {
+        	    x.printStackTrace();
+        	} catch (InvocationTargetException x) {
+        	    x.printStackTrace();
+        	}
+        	selectedSlot = null;
+            }
+        }
+    }
+    
+    private LawnPiece getTileAtMouse() {
+        List<LawnPiece> tiles = getObjects(LawnPiece.class);
+        for (int i = 0; i < tiles.size(); i++) {
+            LawnPiece tile = tiles.get(i);
+            if (tile.getRow() == mouseRow && tile.getCol() == mouseCol) {
+                return tile;
+            }
+        }
+        return null;
     }
     
     private void updateMousePosition() {
@@ -29,6 +64,7 @@ public class MyWorld extends World {
                 if (xMatch && yMatch) {
                     mouseRow = tile.getRow();
                     mouseCol = tile.getCol();
+                    return;
                 }
             }
             mouseRow = -1;
@@ -76,7 +112,7 @@ public class MyWorld extends World {
         }
         
         for (int i = 0; i < 8; i++) {
-            SeedSlot seedSlot = new SeedSlot();
+            SeedSlot seedSlot = new SeedSlot(Sunflower.class.getConstructors()[0]);
             int slotWidth = seedSlot.getImage().getWidth();
             int slotHeight = seedSlot.getImage().getHeight();
             seedSlot.getImage().drawImage(sunflowerRef.getImage(), -7, 0);
