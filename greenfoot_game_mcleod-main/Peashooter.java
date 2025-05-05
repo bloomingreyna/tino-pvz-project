@@ -12,7 +12,11 @@ public class Peashooter extends Plant
      * Act - do whatever the Peashooter wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
-    
+ 
+    public Peashooter(int row, int col) {
+        super(row, col);
+    }
+
     public void act()
     {
         // Add your action code here.
