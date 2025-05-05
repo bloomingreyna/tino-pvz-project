@@ -37,7 +37,7 @@ public class MyWorld extends World {
     }
     
     private void drawSeedSlots() {
-        Sunflower sunflowerRef = new Sunflower();
+        Sunflower sunflowerRef = new Sunflower(-1, -1);
         
         Actor[] plantRefs = {
             sunflowerRef

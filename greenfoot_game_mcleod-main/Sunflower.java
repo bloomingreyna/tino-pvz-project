@@ -13,7 +13,8 @@ public class Sunflower extends Plant
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     int count = 0;
-    public Sunflower() {
+    public Sunflower(int row, int col) {
+        super(row, col);
         getImage().scale(100,100);
     }
     public void act()

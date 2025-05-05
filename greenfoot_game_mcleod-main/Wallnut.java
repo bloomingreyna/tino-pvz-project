@@ -13,6 +13,10 @@ public class Wallnut extends Plant
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     int health = 4000;
+    public Wallnut(int row, int col) {
+        super(row, col);
+    }
+    
     public void act()
     
     {
