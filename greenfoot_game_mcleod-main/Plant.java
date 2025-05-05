@@ -14,6 +14,7 @@ public class Plant extends Actor
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     int health = 300;
+    
     public void act()
     {
         

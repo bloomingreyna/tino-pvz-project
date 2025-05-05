@@ -4,6 +4,7 @@ public class MyWorld extends World {
     public MyWorld() {
         super(950, 600, 1, false);
         drawLawn();
+        drawSeedSlots();
     }
     int count = 0;
     public void act() {
@@ -23,7 +24,7 @@ public class MyWorld extends World {
         int tileColor = 1;
         for (int i = 0; i < 5; i++) {
             for (int x = 0; x < 9; x++) {
-                LawnPiece lawn = new LawnPiece();
+                LawnPiece lawn = new LawnPiece(i, x);
                 lawn.setTileColor(tileColor);
                 int tileWidth = lawn.getImage().getWidth();
                 int tileHeight = lawn.getImage().getHeight();
@@ -33,5 +34,25 @@ public class MyWorld extends World {
             }
         }
         
+    }
+    
+    private void drawSeedSlots() {
+        Sunflower sunflowerRef = new Sunflower();
+        
+        Actor[] plantRefs = {
+            sunflowerRef
+        };
+        
+        for (int i = 0; i < plantRefs.length; i++) {
+            plantRefs[i].getImage().scale(85, 85);
+        }
+        
+        for (int i = 0; i < 8; i++) {
+            SeedSlot seedSlot = new SeedSlot();
+            int slotWidth = seedSlot.getImage().getWidth();
+            int slotHeight = seedSlot.getImage().getHeight();
+            seedSlot.getImage().drawImage(sunflowerRef.getImage(), -7, 0);
+            addObject(seedSlot, i * (slotWidth + 3) + 105, slotHeight / 2 + 5);
+        }
     }
 }
