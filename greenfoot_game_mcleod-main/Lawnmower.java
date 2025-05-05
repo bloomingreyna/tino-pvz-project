@@ -26,7 +26,12 @@ public class Lawnmower extends Actor
         Actor zomb = getOneIntersectingObject(Zombie.class);
         if (zomb != null) {
             Zombie dude = (Zombie)zomb;
-            //dude.setHealth(0);
+            dude.setHealth(0);
+            dude.setCauseOfDeath(0);
+        }
+        
+        if (getX() > getWorld().getWidth() + getImage().getWidth() / 2) {
+            getWorld().removeObject(this);
         }
     }
 }
