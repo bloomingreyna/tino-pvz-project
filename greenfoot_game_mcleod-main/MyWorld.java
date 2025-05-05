@@ -1,6 +1,10 @@
 import greenfoot.*;
 import java.util.Random;
+import java.util.List;
 public class MyWorld extends World {
+    public static int mouseRow = -1;
+    public static int mouseCol = -1;
+    
     public MyWorld() {
         super(950, 600, 1, false);
         drawLawn();
@@ -8,8 +12,32 @@ public class MyWorld extends World {
     }
     int count = 0;
     public void act() {
-        //spawns in sun at random point on top border every 10 seconds if fps 60
-        
+        updateMousePosition();
+        spawnSun();
+    }
+    
+    private void updateMousePosition() {
+        MouseInfo mouse = Greenfoot.getMouseInfo();
+        if (mouse != null) {
+            List<LawnPiece> tiles = getObjects(LawnPiece.class);
+            for (int i = 0; i < tiles.size(); i++) {
+                LawnPiece tile = tiles.get(i);
+                int tileWidth = tile.getImage().getWidth();
+                int tileHeight = tile.getImage().getHeight();
+                boolean xMatch = mouse.getX() > tile.getX() - tileWidth / 2 && mouse.getX() < tile.getX() + tileWidth / 2;
+                boolean yMatch = mouse.getY() > tile.getY() - tileHeight / 2 && mouse.getY() < tile.getY() + tileHeight / 2;
+                if (xMatch && yMatch) {
+                    mouseRow = tile.getRow();
+                    mouseCol = tile.getCol();
+                }
+            }
+            mouseRow = -1;
+            mouseCol = -1;
+        }
+    }
+    
+    //spawns in sun at random point on top border every 10 seconds if fps 60
+    private void spawnSun() {
         if (count == 600) {
             Random rand = new Random();
             int randX = rand.nextInt(getWidth());
