@@ -12,8 +12,11 @@ public class Wallnut extends Plant
      * Act - do whatever the Wallnut wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
+    int health = 4000;
     public void act()
+    
     {
         // Add your action code here.
+        
     }
 }

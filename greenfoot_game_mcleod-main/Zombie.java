@@ -3,6 +3,8 @@ import greenfoot.*;
 public class Zombie extends Actor {
     //States: 0 = moving, 1 = on top of plant, 2 = dead
     protected int state = 0;
+    //Death causes: 0 = normal, 1 = explode, 2 = disappear
+    private int causeOfDeath = 0;
     
     protected int speed;
     protected int moveDurationMax = 40;
@@ -11,23 +13,34 @@ public class Zombie extends Actor {
     protected int stopDuration;
     private boolean moving = true;
     
-    protected int health;
-    protected int damage;
+    protected int eatDurationMax = 30;
+    protected int eatDuration;
+    
+    protected int health = 200;
+    protected int damage = 50;
+    
+    protected int row = -1;
+    protected int col = -1;
     
     public Zombie() {
         this.speed = -1;
         this.moveDuration = moveDurationMax;
         this.stopDuration = stopDurationMax;
-        this.health = 200;
-        this.damage = 50;
+        this.eatDuration = eatDurationMax;
     }
     
     public void act() {
         updateState();
         if (state == 0) {
             moveBehavior();
+            eatDuration = eatDurationMax;
         } else if (state == 1) {
             onPlantBehavior();
+            moving = true;
+            moveDuration = moveDurationMax;
+            stopDuration = stopDurationMax;
+        } else if (state == 2) {
+            die();
         }
     }
     
@@ -65,13 +78,19 @@ public class Zombie extends Actor {
     }
     
     protected void onPlantBehavior() {
-        Actor plant = getOneIntersectingObject(Plant.class);
-        Plant p = (Plant) plant;
-        p.setHealth(p.getHealth() - damage);
+        eatDuration--;
+        if (eatDuration == 0) {
+            eatDuration = eatDurationMax;
+            Actor plant = getOneIntersectingObject(Plant.class);
+            Plant p = (Plant) plant;
+            p.setHealth(p.getHealth() - damage);
+        }
     }
     
     protected void die() {
-        
+        if (causeOfDeath == 0) {
+            getWorld().removeObject(this);
+        }
     }
     
     public int getHealth() {
@@ -80,5 +99,9 @@ public class Zombie extends Actor {
     
     public void setHealth(int health) {
         this.health = health;
+    }
+    
+    public void setCauseOfDeath(int causeOfDeath) {
+        this.causeOfDeath = causeOfDeath;
     }
 }

@@ -14,13 +14,17 @@ public class Plant extends Actor
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     int health = 300;
+    
     public void act()
     {
-        // Add your action code here.
+        
     }
     
     public void setHealth(int health){
         this.health = health;
+        if (this.health <= 0) {
+            getWorld().removeObject(this);
+        }
     }
     
     public int getHealth(){
