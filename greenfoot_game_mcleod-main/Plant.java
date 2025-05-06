@@ -20,6 +20,7 @@ public class Plant extends Actor
     public Plant(int row, int col) {
         this.row = row;
         this.col = col;
+        getImage().scale(100,100);
     }
     
     public void act()

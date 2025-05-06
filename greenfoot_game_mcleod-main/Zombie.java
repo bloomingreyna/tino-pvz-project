@@ -29,6 +29,7 @@ public class Zombie extends Actor {
         this.eatDuration = eatDurationMax;
         this.row = row;
         this.col = col;
+        getImage().scale(100,100);
     }
     
     public void act() {
