@@ -7,3 +7,7 @@ I helped brainstorm the game, made a clone, and followed the steps on the slides
 
 Thurs 5/1/2025 at home - 2 hours
 Created the sunflowers and made them spawn suns, created suns as well
+
+Monday 5/5/2025 at home - 1 hour
+Added the peashooters and the zombie detection, zombie detection not fully there yet, need to work with team members on that.
+The pea should be able to inflict damage on zombies now though.
