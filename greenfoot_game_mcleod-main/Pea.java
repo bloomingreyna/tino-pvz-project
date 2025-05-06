@@ -15,7 +15,7 @@ public class Pea extends Projecticle
     int speed = 5;
     int damage = 20;
     public Pea() {
-        getImage().scale(20,20);
+        getImage().scale(40,40);
     }
     public void act()
     {
