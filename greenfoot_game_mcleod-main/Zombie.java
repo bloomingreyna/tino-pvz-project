@@ -104,6 +104,14 @@ public class Zombie extends Actor {
         this.health = health;
     }
     
+    public int getRow() {
+        return row;
+    }
+    
+    public int getCol() {
+        return col;
+    }
+    
     public void setCauseOfDeath(int causeOfDeath) {
         this.causeOfDeath = causeOfDeath;
     }
