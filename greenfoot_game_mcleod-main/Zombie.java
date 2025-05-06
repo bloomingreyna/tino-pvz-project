@@ -22,7 +22,9 @@ public class Zombie extends Actor {
     protected int row = -1;
     protected int col = -1;
     
-    public Zombie() {
+    public Zombie(int row, int col) {
+        this.row = row;
+        this.col = col;
         this.speed = -1;
         this.moveDuration = moveDurationMax;
         this.stopDuration = stopDurationMax;
