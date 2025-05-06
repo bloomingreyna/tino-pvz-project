@@ -14,6 +14,9 @@ public class Pea extends Projecticle
      */
     int speed = 5;
     int damage = 20;
+    public Pea() {
+        getImage().scale(20,20);
+    }
     public void act()
     {
         // Add your action code here.

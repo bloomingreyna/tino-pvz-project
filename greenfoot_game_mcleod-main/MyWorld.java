@@ -18,6 +18,9 @@ public class MyWorld extends World {
         updateMousePosition();
         spawnSun();
         placePlant();
+        Sun suns = new Sun();
+        int sunAmnt = suns.getSun();
+        showText("Suns: " + sunAmnt, 100,100);
     }
     
     private void placePlant() {
@@ -29,13 +32,13 @@ public class MyWorld extends World {
                     Plant p = (Plant) selectedSlot.getPlant().newInstance(mouseRow, mouseCol);
                     addObject(p, mouse.getX(), mouse.getY());
                 } catch (InstantiationException x) {
-        	    x.printStackTrace();
-        	} catch (IllegalAccessException x) {
-        	    x.printStackTrace();
-        	} catch (InvocationTargetException x) {
-        	    x.printStackTrace();
-        	}
-        	selectedSlot = null;
+                x.printStackTrace();
+            } catch (IllegalAccessException x) {
+                x.printStackTrace();
+            } catch (InvocationTargetException x) {
+                x.printStackTrace();
+            }
+            selectedSlot = null;
             }
         }
     }
@@ -101,7 +104,7 @@ public class MyWorld extends World {
     }
     
     private void drawSeedSlots() {
-        Sunflower sunflowerRef = new Sunflower(-1, -1);
+        Peashooter sunflowerRef = new Peashooter(-1, -1);
         
         Actor[] plantRefs = {
             sunflowerRef
@@ -112,7 +115,7 @@ public class MyWorld extends World {
         }
         
         for (int i = 0; i < 8; i++) {
-            SeedSlot seedSlot = new SeedSlot(Sunflower.class.getConstructors()[0]);
+            SeedSlot seedSlot = new SeedSlot(Peashooter.class.getConstructors()[0]);
             int slotWidth = seedSlot.getImage().getWidth();
             int slotHeight = seedSlot.getImage().getHeight();
             seedSlot.getImage().drawImage(sunflowerRef.getImage(), -7, 0);

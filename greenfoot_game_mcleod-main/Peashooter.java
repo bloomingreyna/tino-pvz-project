@@ -17,17 +17,19 @@ public class Peashooter extends Plant
         super(row, col);
         getImage().scale(50,50);
     }
-
+    int wait = 0;
     public void act()
     {
         // Add your action code here.
         List <Zombie> zombs = getWorld().getObjects(Zombie.class);
         for (int i =0 ; i < zombs.size(); i++) {
             Zombie zomb = zombs.get(i);
-            if (zomb.row == row) {
+            wait++;
+            if (zomb.row == row && wait >= 85) {
                 Pea pea = new Pea();
-                getWorld().addObject(pea, getX(), getY());
                 
+                getWorld().addObject(pea, getX(), getY());
+                wait = 0;
             }
         }
     }
