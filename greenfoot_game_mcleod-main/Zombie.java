@@ -22,11 +22,13 @@ public class Zombie extends Actor {
     protected int row = -1;
     protected int col = -1;
     
-    public Zombie() {
+    public Zombie(int row, int col) {
         this.speed = -1;
         this.moveDuration = moveDurationMax;
         this.stopDuration = stopDurationMax;
         this.eatDuration = eatDurationMax;
+        this.row = row;
+        this.col = col;
         getImage().scale(100,100);
     }
     
