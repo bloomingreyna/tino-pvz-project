@@ -27,15 +27,15 @@ public class MyWorld extends World {
                 try {
                     MouseInfo mouse = Greenfoot.getMouseInfo();
                     Plant p = (Plant) selectedSlot.getPlant().newInstance(mouseRow, mouseCol);
-                    addObject(p, mouse.getX(), mouse.getY());
+                    addObject(p, tile.getX(), tile.getY());
                 } catch (InstantiationException x) {
-        	    x.printStackTrace();
-        	} catch (IllegalAccessException x) {
-        	    x.printStackTrace();
-        	} catch (InvocationTargetException x) {
-        	    x.printStackTrace();
-        	}
-        	selectedSlot = null;
+                    x.printStackTrace();
+                } catch (IllegalAccessException x) {
+                    x.printStackTrace();
+                } catch (InvocationTargetException x) {
+                    x.printStackTrace();
+                }
+            selectedSlot = null;
             }
         }
     }
@@ -101,21 +101,34 @@ public class MyWorld extends World {
     }
     
     private void drawSeedSlots() {
+        Peashooter peashooterRef = new Peashooter(-1, -1);
         Sunflower sunflowerRef = new Sunflower(-1, -1);
+        Cherrybomb cbRef = new Cherrybomb(-1, -1);
+        Wallnut wallnutRef = new Wallnut(-1, -1);
+        
+        Class[] plantClasses = {
+            Peashooter.class,
+            Sunflower.class,
+            Cherrybomb.class,
+            Wallnut.class
+        };
         
         Actor[] plantRefs = {
-            sunflowerRef
+            peashooterRef,
+            sunflowerRef,
+            cbRef,
+            wallnutRef
         };
         
         for (int i = 0; i < plantRefs.length; i++) {
             plantRefs[i].getImage().scale(85, 85);
         }
         
-        for (int i = 0; i < 8; i++) {
-            SeedSlot seedSlot = new SeedSlot(Sunflower.class.getConstructors()[0]);
+        for (int i = 0; i < 4; i++) {
+            SeedSlot seedSlot = new SeedSlot(plantClasses[i].getConstructors()[0]);
             int slotWidth = seedSlot.getImage().getWidth();
             int slotHeight = seedSlot.getImage().getHeight();
-            seedSlot.getImage().drawImage(sunflowerRef.getImage(), -7, 0);
+            seedSlot.getImage().drawImage(plantRefs[i].getImage(), -7, 0);
             addObject(seedSlot, i * (slotWidth + 3) + 105, slotHeight / 2 + 5);
         }
     }
