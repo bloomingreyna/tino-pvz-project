@@ -1,11 +1,13 @@
 #Greenfoot project file
+class.Cherrybomb.image=Untitled.png
 class.LawnPiece.image=lighter_grass.png
 class.Lawnmower.image=autos_01.png
-class.Pea.image=button-green.png
+class.Pea.image=7e8b32f6-189a-426d-806c-a8c43d69be63.png
 class.Peashooter.image=Peashoot.png
 class.Sun.image=Sun_PvZ2.png
 class.Sunflower.image=sunflower_plain.png
-class.Zombie.image=snake2.png
+class.Wallnut.image=wallnuttynobacky.png
+class.Zombie.image=ezgif-89690f8ebfb687.png
 dependency1.from=MyWorld
 dependency1.to=SeedSlot
 dependency1.type=UsesDependency
@@ -186,7 +188,7 @@ target9.type=ClassTarget
 target9.width=120
 target9.x=0
 target9.y=0
-version=3.1.0
+version=3.0.0
 width=1550
 world.lastInstantiated=MyWorld
 xPosition=0
