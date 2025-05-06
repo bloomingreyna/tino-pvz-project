@@ -27,6 +27,7 @@ public class Zombie extends Actor {
         this.moveDuration = moveDurationMax;
         this.stopDuration = stopDurationMax;
         this.eatDuration = eatDurationMax;
+        getImage().scale(100,100);
     }
     
     public void act() {
