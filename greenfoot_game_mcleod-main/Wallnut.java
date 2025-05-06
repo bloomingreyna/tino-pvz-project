@@ -15,6 +15,7 @@ public class Wallnut extends Plant
     int health = 4000;
     public Wallnut(int row, int col) {
         super(row, col);
+        getImage().scale(150,150);
     }
     
     public void act()
