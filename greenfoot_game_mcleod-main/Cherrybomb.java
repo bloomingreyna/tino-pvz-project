@@ -22,6 +22,10 @@ public class Cherrybomb extends Plant
     {
         // Add your action code here.
         LawnPiece joe = new LawnPiece(95,105);
+        Zombie zomb;
+        if(getObjectsInRange(95, Zombie.class) != null){
+                  
+        }
         
         
     }

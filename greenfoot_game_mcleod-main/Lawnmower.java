@@ -13,6 +13,10 @@ public class Lawnmower extends Actor
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     boolean go = false;
+    
+    public Lawnmower(){
+        getImage().scale(100,100);
+    }
     public void act()
     {
         // Add your action code here.
