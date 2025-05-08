@@ -15,6 +15,7 @@ public class Cherrybomb extends Plant
     int health = 999999999;
     public Cherrybomb(int row, int col) {
         super(row, col);
+        this.sunCost = 150;
     }
     
     public void act()

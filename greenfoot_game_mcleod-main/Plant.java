@@ -17,6 +17,8 @@ public class Plant extends Actor
     int row;
     int col;
     
+    protected int sunCost;
+    
     public Plant(int row, int col) {
         this.row = row;
         this.col = col;

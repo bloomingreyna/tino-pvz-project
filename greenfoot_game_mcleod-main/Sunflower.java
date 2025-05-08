@@ -16,6 +16,7 @@ public class Sunflower extends Plant
     public Sunflower(int row, int col) {
         super(row, col);
         getImage().scale(100,100);
+        this.sunCost = 50;
     }
     public void act()
     {

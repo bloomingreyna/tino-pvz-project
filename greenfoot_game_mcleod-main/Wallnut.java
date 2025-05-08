@@ -16,6 +16,7 @@ public class Wallnut extends Plant
         super(row, col);
         this.health = 4000;
         getImage().scale(150,150);
+        this.sunCost = 50;
     }
     
     public void act()

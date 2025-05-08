@@ -16,6 +16,7 @@ public class PotatoMine extends Plant
     int count = 0;
     public PotatoMine (int row, int col) {
         super(row,col);
+        this.sunCost = 25;
     }
     public void act()
     {
