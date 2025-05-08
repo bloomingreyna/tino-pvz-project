@@ -11,6 +11,7 @@ public class MyWorld extends World {
     public MyWorld() {
         super(950, 600, 1, false);
         drawLawn();
+        drawLawnmowers();
         drawSeedSlots();
     }
     int count = 0;
@@ -23,6 +24,13 @@ public class MyWorld extends World {
         showText("Suns: " + sunAmnt, 100,100);
     }
     
+    private void drawLawnmowers() {
+        for (int i = 0; i < 5; i++) {
+            Lawnmower l = new Lawnmower();
+            addObject(l, 25, 150 + i * 105);
+        }
+    }
+    
     private void placePlant() {
         if (selectedSlot != null) {
             LawnPiece tile = getTileAtMouse();
@@ -30,10 +38,9 @@ public class MyWorld extends World {
                 try {
                     MouseInfo mouse = Greenfoot.getMouseInfo();
                     Plant p = (Plant) selectedSlot.getPlant().newInstance(mouseRow, mouseCol);
-                    if (p.sunCost <= Sun.sun) {
-                        addObject(p, tile.getX(), tile.getY());
-                        Sun.sun -= p.sunCost;
-                    }
+                    addObject(p, tile.getX(), tile.getY());
+                    Sun.sun -= p.sunCost;
+                    selectedSlot.depleteCharge();
                 } catch (InstantiationException x) {
                     x.printStackTrace();
                 } catch (IllegalAccessException x) {
@@ -134,10 +141,9 @@ public class MyWorld extends World {
         }
         
         for (int i = 0; i < 5; i++) {
-            SeedSlot seedSlot = new SeedSlot(plantClasses[i].getConstructors()[0]);
+            SeedSlot seedSlot = new SeedSlot(plantClasses[i].getConstructors()[0], (Plant) plantRefs[i]);
             int slotWidth = seedSlot.getImage().getWidth();
             int slotHeight = seedSlot.getImage().getHeight();
-            seedSlot.getImage().drawImage(plantRefs[i].getImage(), -7, 0);
             addObject(seedSlot, i * (slotWidth + 3) + 105, slotHeight / 2 + 5);
         }
     }

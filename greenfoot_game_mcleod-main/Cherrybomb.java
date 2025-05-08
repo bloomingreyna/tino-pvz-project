@@ -16,6 +16,8 @@ public class Cherrybomb extends Plant
     public Cherrybomb(int row, int col) {
         super(row, col);
         this.sunCost = 150;
+        this.rechargeTime = 3000;
+        this.startCharge = false;
     }
     
     public void act()

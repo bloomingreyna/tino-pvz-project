@@ -18,7 +18,8 @@ public class Plant extends Actor
     int col;
     
     protected int sunCost;
-    protected double rechargeTime;
+    protected int rechargeTime;
+    protected boolean startCharge;
     
     public Plant(int row, int col) {
         this.row = row;
@@ -42,5 +43,12 @@ public class Plant extends Actor
         return health;
     }
     
+    public int getRechargeTime() {
+        return rechargeTime;
+    }
+    
+    public boolean isChargedAtStart() {
+        return startCharge;
+    }
 
 }

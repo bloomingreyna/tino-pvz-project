@@ -17,7 +17,8 @@ public class Sunflower extends Plant
         super(row, col);
         getImage().scale(100,100);
         this.sunCost = 50;
-        this.rechargeTime = 7.5;
+        this.rechargeTime = 450;
+        this.startCharge = true;
     }
     public void act()
     {
