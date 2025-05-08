@@ -1,4 +1,4 @@
-import greenfoot.*;
+  import greenfoot.*;
 
 public class Zombie extends Actor {
     //States: 0 = moving, 1 = on top of plant, 2 = dead
