@@ -30,7 +30,10 @@ public class MyWorld extends World {
                 try {
                     MouseInfo mouse = Greenfoot.getMouseInfo();
                     Plant p = (Plant) selectedSlot.getPlant().newInstance(mouseRow, mouseCol);
-                    addObject(p, tile.getX(), tile.getY());
+                    if (p.sunCost <= Sun.sun) {
+                        addObject(p, tile.getX(), tile.getY());
+                        Sun.sun -= p.sunCost;
+                    }
                 } catch (InstantiationException x) {
                     x.printStackTrace();
                 } catch (IllegalAccessException x) {
@@ -108,26 +111,29 @@ public class MyWorld extends World {
         Sunflower sunflowerRef = new Sunflower(-1, -1);
         Cherrybomb cbRef = new Cherrybomb(-1, -1);
         Wallnut wallnutRef = new Wallnut(-1, -1);
+        PotatoMine potatoMineRef = new PotatoMine(-1, -1);
         
         Class[] plantClasses = {
             Peashooter.class,
             Sunflower.class,
             Cherrybomb.class,
-            Wallnut.class
+            Wallnut.class,
+            PotatoMine.class
         };
         
         Actor[] plantRefs = {
             peashooterRef,
             sunflowerRef,
             cbRef,
-            wallnutRef
+            wallnutRef,
+            potatoMineRef
         };
         
         for (int i = 0; i < plantRefs.length; i++) {
             plantRefs[i].getImage().scale(85, 85);
         }
         
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 5; i++) {
             SeedSlot seedSlot = new SeedSlot(plantClasses[i].getConstructors()[0]);
             int slotWidth = seedSlot.getImage().getWidth();
             int slotHeight = seedSlot.getImage().getHeight();
