@@ -16,6 +16,8 @@ public class Peashooter extends Plant
     public Peashooter(int row, int col) {
         super(row, col);
         getImage().scale(75,75);
+        this.sunCost = 100;
+        this.rechargeTime = 7.5;
     }
     int wait = 0;
     public void act()

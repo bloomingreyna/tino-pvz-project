@@ -16,19 +16,21 @@ public class Sunflower extends Plant
     public Sunflower(int row, int col) {
         super(row, col);
         getImage().scale(100,100);
+        this.sunCost = 50;
+        this.rechargeTime = 7.5;
     }
     public void act()
     {
         // Add your action code here.
         super.act();
         count++;
-        if (count == 900) {
+        if (count == 1380) {
             Sun sun = new Sun();
             getWorld().addObject(sun, getX(), getY());
             setImage("light_sunflower.png");
             getImage().scale(100,100);
         }
-        if (count == 960) {
+        if (count == 1440) {
             setImage("sunflower_plain.png");
             getImage().scale(100,100);
             count = 0;
