@@ -20,6 +20,7 @@ public class PotatoMine extends Plant
         this.sunCost = 25;
         this.rechargeTime = 1800;
         this.startCharge = false;
+        setImage("PotatoMineWhite.png");
     }
     public void act()
     {
@@ -48,6 +49,8 @@ public class PotatoMine extends Plant
                 for (int i = 0; i < exploded.size(); i++) {
                     Zombie zomb = exploded.get(i);
                     getWorld().removeObject(zomb);
+                    //make some exploding ainmation here
+                    getWorld().removeObject(this);
                 }
             }
         }

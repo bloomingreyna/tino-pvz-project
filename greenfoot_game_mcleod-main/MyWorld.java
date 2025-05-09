@@ -10,6 +10,7 @@ public class MyWorld extends World {
     
     public MyWorld() {
         super(950, 600, 1, false);
+        
         drawLawn();
         drawLawnmowers();
         drawSeedSlots();
@@ -84,7 +85,6 @@ public class MyWorld extends World {
             mouseCol = -1;
         }
     }
-    
     //spawns in sun at random point on top border every 10 seconds if fps 60
     private void spawnSun() {
         if (count == 600) {
@@ -106,7 +106,7 @@ public class MyWorld extends World {
                 int tileWidth = lawn.getImage().getWidth();
                 int tileHeight = lawn.getImage().getHeight();
                 tileColor = tileColor * -1;
-                addObject(lawn, (x * tileWidth) + 100, (i * tileHeight) + getHeight() - tileHeight / 2 * 9);
+                addObject(lawn, (x * tileWidth) + 100, ((i * tileHeight) + getHeight() - tileHeight / 2 * 9));
                 
             }
         }
