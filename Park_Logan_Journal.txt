@@ -11,3 +11,9 @@ Created the sunflowers and made them spawn suns, created suns as well
 Monday 5/5/2025 at home - 1 hour
 Added the peashooters and the zombie detection, zombie detection not fully there yet, need to work with team members on that.
 The pea should be able to inflict damage on zombies now though.
+
+Tuesday 5/6/2025 at home - 1 hour
+Pollished up the peashooter, it now shoots corrects at zombies and eventual removes them. I still have to remove the peas when they go off screen.
+
+Thursday 5/8/2025 at home and in class - 2 hours
+Made the potato mine, it arms itself after 15 seconds and has a blinking animation. When a zombie touches it it removes all zombies within a certain radius.
