@@ -2,3 +2,19 @@ JUSTIN'S AWESOME JOURNAL!!!
 
 -April 30, 2025-
 Did the homework. Brainstormed game idea.
+
+-May 1, 2025-
+Worked on the zombie class, added an animation tool that I made at the beginning of the
+semester, and zombies can die to lawnmowers (lawnmower code courtesy of Logan).
+
+-May 2, 2025-
+Made modifications to the lawn dimensions and position, as well as made plants able to be
+eaten by zombies.
+
+-May 5, 2025-
+Made it possible to place plants using seed slots at the top of the screen, although they
+do not snap to the grid.
+
+-May 6, 2025-
+Made plants able to snap to the grid, fixed the health code on plants since Wall-nuts were 
+dying just as fast as most other plants.
