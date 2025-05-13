@@ -28,12 +28,17 @@ public class Peashooter extends Plant
         for (int i =0 ; i < zombs.size(); i++) {
             Zombie zomb = zombs.get(i);
             wait++;
-            if (zomb.row == row && wait >= 100) {
-                Pea pea = new Pea();
-                
-                getWorld().addObject(pea, getX(), getY());
-                wait = 0;
+
+            if (zomb.row == row && wait >= 85) {
+                shoot();
             }
         }
+    }
+    
+    protected void shoot() {
+        Pea pea = new Pea();
+        
+        getWorld().addObject(pea, getX(), getY());
+        wait = 0;
     }
 }

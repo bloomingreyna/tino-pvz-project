@@ -14,6 +14,7 @@ public class Sun extends Actor
      */
     int stopY;
     static int sun = 1000;
+    
     public Sun() {
         getImage().scale(50,50);
     }
