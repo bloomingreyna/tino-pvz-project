@@ -21,8 +21,9 @@ public class ConeHead extends Zombie
     public void act(){
         super.act();
         if(health<=200){
-            setImage("ezgif-89690f8ebfb687.png");
-            getImage().scale(100,100);
+            GreenfootImage damaged = new GreenfootImage("ezgif-89690f8ebfb687.png");
+            damaged.scale(100, 100);
+            setImage(damaged);
         }
     }
 }

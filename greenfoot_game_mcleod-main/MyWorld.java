@@ -142,7 +142,7 @@ public class MyWorld extends World {
         };
         
         for (int i = 0; i < plantRefs.length; i++) {
-            plantRefs[i].getImage().scale(85, 85);
+            plantRefs[i].getImage().scale(70, 70);
         }
         
         for (int i = 0; i < 6; i++) {

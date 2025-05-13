@@ -19,7 +19,7 @@ public class SeedSlot extends Actor {
         seedBG.setColor(chargedColor);
         seedBG.fill();
         setImage(seedBG);
-        getImage().drawImage(plantRef.getImage(), -7, 0);
+        getImage().drawImage(plantRef.getImage(), 0, 7);
         this.rechargeTime = plantRef.getRechargeTime();
         this.plantRef = plantRef;
         if (plantRef.isChargedAtStart()) {
