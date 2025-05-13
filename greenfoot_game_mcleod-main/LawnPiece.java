@@ -16,6 +16,7 @@ public class LawnPiece extends Actor
     
     private int row;
     private int col;
+    private Plant p = null;
     
     public LawnPiece(int row, int col) {
         this.row = row;
@@ -42,5 +43,13 @@ public class LawnPiece extends Actor
     
     public int getCol() {
         return col;
+    }
+    
+    public Plant getPlant() {
+        return p;
+    }
+    
+    public void setPlant(Plant p) {
+        this.p = p;
     }
 }

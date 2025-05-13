@@ -42,6 +42,8 @@ public class MyWorld extends World {
                     addObject(p, tile.getX(), tile.getY());
                     Sun.sun -= p.sunCost;
                     selectedSlot.depleteCharge();
+                    tile.setPlant(p);
+                    System.out.println(tile.getPlant());
                 } catch (InstantiationException x) {
                     x.printStackTrace();
                 } catch (IllegalAccessException x) {

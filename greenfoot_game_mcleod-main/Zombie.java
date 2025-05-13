@@ -22,6 +22,10 @@ public class Zombie extends Actor {
     protected int row = -1;
     protected int col = -1;
     
+    private GreenfootImage debugBall = new GreenfootImage("ball.png");
+    private int sensorX;
+    private int sensorY;
+    
     public Zombie(int row, int col) {
         this.speed = -1;
         this.moveDuration = moveDurationMax;
@@ -30,6 +34,12 @@ public class Zombie extends Actor {
         this.row = row;
         this.col = col;
         getImage().scale(100,100);
+        
+        int x = getImage().getWidth() / 2 + 15;
+        int y = getImage().getHeight() / 2 - 10;
+        sensorX = x - getImage().getWidth() / 2;
+        sensorY = y - getImage().getWidth() / 2;
+        getImage().drawImage(debugBall, x, y);
     }
     
     public void act() {
@@ -53,12 +63,22 @@ public class Zombie extends Actor {
             return;
         }
         
-        Actor plant = getOneIntersectingObject(Plant.class);
-        if (plant != null) {
+        if (checkForPlant()) {
             state = 1;
         } else {
             state = 0;
         }
+    }
+    
+    private boolean checkForPlant() {
+        Actor l = getOneObjectAtOffset(sensorX, sensorY, LawnPiece.class);
+        if (l != null) {
+            LawnPiece lawnPiece = (LawnPiece) l;
+            if (lawnPiece.getPlant() != null) {
+                return true;
+            }
+        }
+        return false;
     }
     
     protected void moveBehavior() {
@@ -87,6 +107,13 @@ public class Zombie extends Actor {
             Actor plant = getOneIntersectingObject(Plant.class);
             Plant p = (Plant) plant;
             p.setHealth(p.getHealth() - damage);
+            if (p.getHealth() <= 0) {
+                Actor l = getOneObjectAtOffset(sensorX, sensorY, LawnPiece.class);
+                if (l != null) {
+                    LawnPiece lawnPiece = (LawnPiece) l;
+                    lawnPiece.setPlant(null);
+                }
+            }
         }
     }
     
