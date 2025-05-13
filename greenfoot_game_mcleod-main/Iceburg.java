@@ -22,5 +22,11 @@ public class Iceburg extends Plant
     public void act()
     {
         // Add your action code here.
+        if (isTouching(Zombie.class)) {
+            Zombie zomb =(Zombie) getOneIntersectingObject(Zombie.class);
+            zomb.slow();
+            //do icy explosion animation here
+            getWorld().removeObject(this);
+        }
     }
 }
