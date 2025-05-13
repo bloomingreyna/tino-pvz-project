@@ -17,7 +17,7 @@ public class Peashooter extends Plant
         super(row, col);
         getImage().scale(75,75);
         this.sunCost = 100;
-        this.rechargeTime = 450;
+        this.rechargeTime = 0;
         this.startCharge = true;
     }
     int wait = 0;
@@ -28,6 +28,7 @@ public class Peashooter extends Plant
         for (int i =0 ; i < zombs.size(); i++) {
             Zombie zomb = zombs.get(i);
             wait++;
+
             if (zomb.row == row && wait >= 85) {
                 shoot();
             }
