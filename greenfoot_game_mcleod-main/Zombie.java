@@ -6,12 +6,15 @@ public class Zombie extends Actor {
     //Death causes: 0 = normal, 1 = explode, 2 = disappear
     private int causeOfDeath = 0;
     
-    protected int speed;
+    protected int speed = -1;
     protected int moveDurationMax = 40;
     protected int stopDurationMax = 80;
     protected int moveDuration;
     protected int stopDuration;
     private boolean moving = true;
+    
+    private int slowTimeMax = 120;
+    private int slowTime = 0;
     
     protected int eatDurationMax = 30;
     protected int eatDuration;
@@ -27,7 +30,6 @@ public class Zombie extends Actor {
     private int sensorY;
     
     public Zombie(int row, int col) {
-        this.speed = -1;
         this.moveDuration = moveDurationMax;
         this.stopDuration = stopDurationMax;
         this.eatDuration = eatDurationMax;
@@ -58,6 +60,7 @@ public class Zombie extends Actor {
     }
     
     private void updateState() {
+        slowTime--;
         if (health <= 0) {
             state = 2;
             return;
@@ -82,19 +85,23 @@ public class Zombie extends Actor {
     }
     
     protected void moveBehavior() {
-        if (moveDuration == 0) {
+        if (moveDuration <= 0) {
             moving = false;
             moveDuration = moveDurationMax;
         }
                             
-        if (stopDuration == 0) {
+        if (stopDuration <= 0) {
             moving = true;
-            stopDuration = stopDurationMax;
+            stopDuration = stopDurationMax * (slowTime > 0 ? 2 : 1);
         }
         
         if (moving) {
             move(speed);
-            moveDuration--;
+            if (slowTime > 0) {
+                moveDuration -= 2;
+            } else {
+                moveDuration--;
+            }
         } else {
             stopDuration--;
         }
@@ -141,5 +148,9 @@ public class Zombie extends Actor {
     
     public void setCauseOfDeath(int causeOfDeath) {
         this.causeOfDeath = causeOfDeath;
+    }
+    
+    public void slow() {
+        slowTime = slowTimeMax;
     }
 }

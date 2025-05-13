@@ -121,13 +121,15 @@ public class MyWorld extends World {
         Cherrybomb cbRef = new Cherrybomb(-1, -1);
         Wallnut wallnutRef = new Wallnut(-1, -1);
         PotatoMine potatoMineRef = new PotatoMine(-1, -1);
+        SnowPea spRef = new SnowPea(-1, -1);
         
         Class[] plantClasses = {
             Peashooter.class,
             Sunflower.class,
             Cherrybomb.class,
             Wallnut.class,
-            PotatoMine.class
+            PotatoMine.class,
+            SnowPea.class
         };
         
         Actor[] plantRefs = {
@@ -135,14 +137,15 @@ public class MyWorld extends World {
             sunflowerRef,
             cbRef,
             wallnutRef,
-            potatoMineRef
+            potatoMineRef,
+            spRef
         };
         
         for (int i = 0; i < plantRefs.length; i++) {
             plantRefs[i].getImage().scale(85, 85);
         }
         
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 6; i++) {
             SeedSlot seedSlot = new SeedSlot(plantClasses[i].getConstructors()[0], (Plant) plantRefs[i]);
             int slotWidth = seedSlot.getImage().getWidth();
             int slotHeight = seedSlot.getImage().getHeight();

@@ -23,8 +23,12 @@ public class Pea extends Projecticle
         move(speed);
         if (isTouching(Zombie.class)) {
             Zombie zomb = (Zombie) getOneIntersectingObject(Zombie.class);
-            zomb.setHealth(zomb.getHealth() - damage);
-            getWorld().removeObject(this);
+            onHit(zomb);
         }
+    }
+    
+    protected void onHit(Zombie z) {
+        z.setHealth(z.getHealth() - damage);
+        getWorld().removeObject(this);
     }
 }
