@@ -15,8 +15,8 @@ public class Iceburg extends Plant
     int health = 999999999;
     public Iceburg(int row, int col) {
         super(row, col);
-        this.sunCost = 150;
-        this.rechargeTime = 3000;
+        this.sunCost = 75;
+        this.rechargeTime = 1200;
         this.startCharge = false;
     }
     public void act()
@@ -24,9 +24,12 @@ public class Iceburg extends Plant
         // Add your action code here.
         if (isTouching(Zombie.class)) {
             Zombie zomb =(Zombie) getOneIntersectingObject(Zombie.class);
-            zomb.slow();
-            //do icy explosion animation here
-            getWorld().removeObject(this);
+            if (zomb.row == row) {
+                zomb.slow();
+                //do icy explosion animation here
+                getWorld().removeObject(this);
+                this.tile.setPlant(null);
+            }
         }
     }
 }

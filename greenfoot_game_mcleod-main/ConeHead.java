@@ -14,8 +14,8 @@ public class ConeHead extends Zombie
      */
     
     
-    public ConeHead(int row, int col) {
-        super(row,col);
+    public ConeHead(int row) {
+        super(row);
         this.health = 640;    
     }
     public void act(){

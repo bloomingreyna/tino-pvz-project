@@ -10,10 +10,8 @@ public class SnowPea extends Peashooter
 {
     public SnowPea(int row, int col) {
         super(row, col);
-        getImage().scale(75, 75);
         this.sunCost = 175;
-        this.rechargeTime = 450;
-        this.startCharge = true;
+        this.startCharge = false;
     }
     
     @Override
@@ -21,6 +19,5 @@ public class SnowPea extends Peashooter
         SnowPeaBullet pea = new SnowPeaBullet();
         
         getWorld().addObject(pea, getX(), getY());
-        wait = 0;
     }
 }

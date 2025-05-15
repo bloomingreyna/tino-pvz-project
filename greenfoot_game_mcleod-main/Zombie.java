@@ -29,12 +29,11 @@ public class Zombie extends Actor {
     private int sensorX;
     private int sensorY;
     
-    public Zombie(int row, int col) {
+    public Zombie(int row) {
         this.moveDuration = moveDurationMax;
         this.stopDuration = stopDurationMax;
         this.eatDuration = eatDurationMax;
         this.row = row;
-        this.col = col;
         getImage().scale(100,100);
         
         int x = getImage().getWidth() / 2 + 15;
@@ -45,6 +44,11 @@ public class Zombie extends Actor {
     }
     
     public void act() {
+        if (getX() < -getImage().getWidth()) {
+            getWorld().removeObject(this);
+            return;
+        }
+        
         updateState();
         if (state == 0) {
             moveBehavior();

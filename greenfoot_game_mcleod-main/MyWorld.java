@@ -8,6 +8,14 @@ public class MyWorld extends World {
     public static int mouseCol = -1;
     public static SeedSlot selectedSlot = null;
     
+    int gracePeriod = 1500;
+    final int WAVE_GAP = 1020;
+    int waveGap = 0;
+    int maxZombieIncreaseGap = 2;
+    int zombieIncreaseGap = 2;
+    int currentWave = 0;
+    int amountOfZombiesToSpawn = 1;
+    
     public MyWorld() {
         super(950, 600, 1, false);
         
@@ -20,9 +28,40 @@ public class MyWorld extends World {
         updateMousePosition();
         spawnSun();
         placePlant();
+        spawnZombies();
         Sun suns = new Sun();
         int sunAmnt = suns.getSun();
         showText("Suns: " + sunAmnt, 100,100);
+    }
+    
+    private void spawnZombies() {
+        gracePeriod--;
+        if (gracePeriod <= 0) {
+            waveGap--;
+            if (waveGap <= 0) {
+                waveGap = WAVE_GAP;
+                currentWave++;
+                for (int i = 0; i < amountOfZombiesToSpawn; i++) {
+                    int row = Greenfoot.getRandomNumber(5);
+                    int y = (row * 105) + getHeight() - 105 / 2 * 9;
+                    Zombie z = null;
+                    if (Greenfoot.getRandomNumber(100) < 25 && currentWave > 3) {
+                        z = new ConeHead(row);
+                    } else {
+                        z = new Zombie(row);
+                    }
+                    addObject(z, getWidth(), y);
+                }
+                
+                if (zombieIncreaseGap <= 0) {
+                    amountOfZombiesToSpawn++;
+                    maxZombieIncreaseGap--;
+                    zombieIncreaseGap = maxZombieIncreaseGap;
+                } else {
+                    zombieIncreaseGap--;
+                }
+            }
+        }
     }
     
     private void drawLawnmowers() {
@@ -43,7 +82,7 @@ public class MyWorld extends World {
                     Sun.sun -= p.sunCost;
                     selectedSlot.depleteCharge();
                     tile.setPlant(p);
-                    System.out.println(tile.getPlant());
+                    p.tile = tile;
                 } catch (InstantiationException x) {
                     x.printStackTrace();
                 } catch (IllegalAccessException x) {
@@ -122,6 +161,7 @@ public class MyWorld extends World {
         Wallnut wallnutRef = new Wallnut(-1, -1);
         PotatoMine potatoMineRef = new PotatoMine(-1, -1);
         SnowPea spRef = new SnowPea(-1, -1);
+        Iceburg iceburgRef = new Iceburg(-1, -1);
         
         Class[] plantClasses = {
             Peashooter.class,
@@ -129,7 +169,8 @@ public class MyWorld extends World {
             Cherrybomb.class,
             Wallnut.class,
             PotatoMine.class,
-            SnowPea.class
+            SnowPea.class,
+            Iceburg.class
         };
         
         Actor[] plantRefs = {
@@ -138,14 +179,15 @@ public class MyWorld extends World {
             cbRef,
             wallnutRef,
             potatoMineRef,
-            spRef
+            spRef,
+            iceburgRef
         };
         
         for (int i = 0; i < plantRefs.length; i++) {
             plantRefs[i].getImage().scale(70, 70);
         }
         
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < plantClasses.length; i++) {
             SeedSlot seedSlot = new SeedSlot(plantClasses[i].getConstructors()[0], (Plant) plantRefs[i]);
             int slotWidth = seedSlot.getImage().getWidth();
             int slotHeight = seedSlot.getImage().getHeight();

@@ -20,6 +20,7 @@ public class Plant extends Actor
     protected int sunCost;
     protected int rechargeTime;
     protected boolean startCharge;
+    protected LawnPiece tile;
     
     public Plant(int row, int col) {
         this.row = row;
