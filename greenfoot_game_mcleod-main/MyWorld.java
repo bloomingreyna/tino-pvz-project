@@ -16,6 +16,8 @@ public class MyWorld extends World {
     int currentWave = 0;
     int amountOfZombiesToSpawn = 1;
     
+    SunDisplay currentDisplay = null;
+    
     public MyWorld() {
         super(950, 600, 1, false);
         
@@ -31,8 +33,12 @@ public class MyWorld extends World {
         spawnZombies();
         Sun suns = new Sun();
         int sunAmnt = suns.getSun();
+        if (currentDisplay != null) {
+            removeObject(currentDisplay);
+        }
         SunDisplay sunDisplay = new SunDisplay("Suns: " + sunAmnt, 25, Color.YELLOW, Color.BLACK);
         addObject(sunDisplay, 100,100);
+        currentDisplay = sunDisplay;
     }
     
     private void spawnZombies() {
