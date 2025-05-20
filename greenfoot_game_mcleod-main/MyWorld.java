@@ -9,7 +9,7 @@ public class MyWorld extends World {
     public static SeedSlot selectedSlot = null;
     
     int gracePeriod = 1500;
-    final int WAVE_GAP = 1020;
+    int waveMaxGap = 1020;
     int waveGap = 0;
     int maxZombieIncreaseGap = 2;
     int zombieIncreaseGap = 2;
@@ -46,13 +46,16 @@ public class MyWorld extends World {
         if (gracePeriod <= 0) {
             waveGap--;
             if (waveGap <= 0) {
-                waveGap = WAVE_GAP;
+                waveGap = waveMaxGap;
+                if (waveMaxGap > 120) {
+                    waveMaxGap -= 25;
+                }
                 currentWave++;
                 for (int i = 0; i < amountOfZombiesToSpawn; i++) {
                     int row = Greenfoot.getRandomNumber(5);
                     int y = (row * 105) + getHeight() - 105 / 2 * 9;
                     Zombie z = null;
-                    if (Greenfoot.getRandomNumber(100) < 25 && currentWave > 3) {
+                    if (Greenfoot.getRandomNumber(100) < 30 && currentWave > 1) {
                         z = new ConeHead(row);
                     } else {
                         z = new Zombie(row);
