@@ -17,3 +17,9 @@ Pollished up the peashooter, it now shoots corrects at zombies and eventual remo
 
 Thursday 5/8/2025 at home and in class - 2 hours
 Made the potato mine, it arms itself after 15 seconds and has a blinking animation. When a zombie touches it it removes all zombies within a certain radius.
+
+Wednesday 5/14/2025 in class - 1 hour
+Started on the iceburg lettuce, helped with slowing mechanic
+
+Monday 5/19/2025 at home - 90 min
+Created a text class to display the sun count, and made the suns go to the sun display after being clicked, which also increased the sun count on the sun display.
