@@ -7,8 +7,8 @@ public class Zombie extends Actor {
     private int causeOfDeath = 0;
     
     protected int speed = -1;
-    protected int moveDurationMax = 40;
-    protected int stopDurationMax = 80;
+    protected int moveDurationMax = 40 + Greenfoot.getRandomNumber(10);
+    protected int stopDurationMax = 80 + Greenfoot.getRandomNumber(10);
     protected int moveDuration;
     protected int stopDuration;
     private boolean moving = true;
@@ -28,6 +28,9 @@ public class Zombie extends Actor {
     private GreenfootImage debugBall = new GreenfootImage("ball.png");
     private int sensorX;
     private int sensorY;
+    
+    private int walkStart = Greenfoot.getRandomNumber(75);
+    private boolean active = false;
     
     public Zombie(int row) {
         this.moveDuration = moveDurationMax;
@@ -49,17 +52,21 @@ public class Zombie extends Actor {
             return;
         }
         
-        updateState();
-        if (state == 0) {
-            moveBehavior();
-            eatDuration = eatDurationMax;
-        } else if (state == 1) {
-            onPlantBehavior();
-            moving = true;
-            moveDuration = moveDurationMax;
-            stopDuration = stopDurationMax;
-        } else if (state == 2) {
-            die();
+        walkStart--;
+        if (walkStart <= 0) {
+            active = true;
+            updateState();
+            if (state == 0) {
+                moveBehavior();
+                eatDuration = eatDurationMax;
+            } else if (state == 1) {
+                onPlantBehavior();
+                moving = true;
+                moveDuration = moveDurationMax;
+                stopDuration = stopDurationMax;
+            } else if (state == 2) {
+                die();
+            }
         }
     }
     
@@ -156,5 +163,9 @@ public class Zombie extends Actor {
     
     public void slow() {
         slowTime = slowTimeMax;
+    }
+    
+    public boolean isActive() {
+        return active;
     }
 }
