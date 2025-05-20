@@ -30,13 +30,13 @@ public class Sun extends Actor
             setLocation(getX(), getY() + 1);
         }
         if (Greenfoot.mouseClicked(this)) {
-            turnTowards(100,100);
+            
             goToSun = true;
             
         }
         if (goToSun) {
-            
-            move(3);
+            turnTowards(100,100);
+            move(10);
             if (isTouching(SunDisplay.class)) {
                 sun += 25;
                 goToSun = false;
