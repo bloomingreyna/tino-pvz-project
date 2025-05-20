@@ -14,7 +14,7 @@ public class Sun extends Actor
      */
     int stopY;
     static int sun = 1000;
-    
+    boolean goToSun = false;
     public Sun() {
         getImage().scale(50,50);
     }
@@ -26,13 +26,24 @@ public class Sun extends Actor
     public void act()
     {
         // Maybe have something different for suns that come out of sunflowers?
-        if (getY() < stopY) {
+        if (goToSun == false && getY() < stopY) {
             setLocation(getX(), getY() + 1);
         }
         if (Greenfoot.mouseClicked(this)) {
-            sun += 25;
-            getWorld().removeObject(this);
+            turnTowards(100,100);
+            goToSun = true;
+            
         }
+        if (goToSun) {
+            
+            move(3);
+            if (isTouching(SunDisplay.class)) {
+                sun += 25;
+                goToSun = false;
+                getWorld().removeObject(this);
+            }
+        }
+        
     }
     public int getSun() {
         return sun;

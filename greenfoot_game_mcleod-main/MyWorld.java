@@ -31,7 +31,8 @@ public class MyWorld extends World {
         spawnZombies();
         Sun suns = new Sun();
         int sunAmnt = suns.getSun();
-        showText("Suns: " + sunAmnt, 100,100);
+        SunDisplay sunDisplay = new SunDisplay("Suns: " + sunAmnt, 25, Color.YELLOW, Color.BLACK);
+        addObject(sunDisplay, 100,100);
     }
     
     private void spawnZombies() {
