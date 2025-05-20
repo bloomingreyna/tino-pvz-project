@@ -29,16 +29,15 @@ public class Sun extends Actor
         if (goToSun == false && getY() < stopY) {
             setLocation(getX(), getY() + 1);
         }
-        if (Greenfoot.mouseClicked(this)) {
+        if (Greenfoot.mouseClicked(this) && goToSun == false) {
             turnTowards(100,100);
             goToSun = true;
-            
+            sun += 25;
         }
         if (goToSun) {
             
             move(3);
             if (isTouching(SunDisplay.class)) {
-                sun += 25;
                 goToSun = false;
                 getWorld().removeObject(this);
             }
