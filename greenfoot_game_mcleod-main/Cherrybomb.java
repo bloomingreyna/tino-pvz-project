@@ -14,29 +14,28 @@ public class Cherrybomb extends Plant
      */
     int health = 999999999;
     int count = 0;
+    
+    private GreenfootImage debugBall = new GreenfootImage("ball.png");
+    final int BLAST_RADIUS = 135;
+    
     public Cherrybomb(int row, int col) {
         super(row, col);
         this.sunCost = 150;
         this.rechargeTime = 3000;
-        this.startCharge = false;
+        this.startCharge = true;
     }
     
     public void act()
     {
         // Add your action code here.
-        LawnPiece joe = new LawnPiece(95,105);
-        Zombie zomb;
         if (count >= 60) {
-            List<Zombie> zombsExploded = getObjectsInRange(95, Zombie.class);
-            
+            List<Zombie> zombsExploded = getObjectsInRange(BLAST_RADIUS, Zombie.class);
             
             for(int i = 0; i < zombsExploded.size(); i++) {
-                
                 getWorld().removeObject(zombsExploded.get(i));
-                
-                getWorld().removeObject(this);
-                this.tile.setPlant(null);
             }
+            getWorld().removeObject(this);
+            this.tile.setPlant(null);
         }
         count++;
     }

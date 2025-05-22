@@ -13,26 +13,30 @@ public class Lawnmower extends Actor
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     boolean go = false;
+    int row;
     
-    public Lawnmower(){
+    public Lawnmower(int row){
         getImage().scale(100,100);
+        this.row = row;
     }
     public void act()
     {
         // Add your action code here.
-        if (isTouching(Zombie.class)) {
-            go = true;
+        Actor zomb = getOneIntersectingObject(Zombie.class);
+        if (zomb != null) {
+            Zombie dude = (Zombie)zomb;
+            if (dude.row == row) {
+                go = true;
+                dude.setHealth(0);
+                dude.setCauseOfDeath(0);
+            }
         }
+        
         if (go) {
             move(3);
         }
         
-        Actor zomb = getOneIntersectingObject(Zombie.class);
-        if (zomb != null) {
-            Zombie dude = (Zombie)zomb;
-            dude.setHealth(0);
-            dude.setCauseOfDeath(0);
-        }
+        
         
         if (getX() > getWorld().getWidth() + getImage().getWidth() / 2) {
             getWorld().removeObject(this);
