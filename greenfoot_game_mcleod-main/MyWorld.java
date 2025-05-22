@@ -80,7 +80,7 @@ public class MyWorld extends World {
     
     private void drawLawnmowers() {
         for (int i = 0; i < 5; i++) {
-            Lawnmower l = new Lawnmower();
+            Lawnmower l = new Lawnmower(i);
             addObject(l, 25, 150 + i * 105);
         }
     }
