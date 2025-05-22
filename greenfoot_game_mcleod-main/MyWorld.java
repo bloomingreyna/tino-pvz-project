@@ -20,7 +20,7 @@ public class MyWorld extends World {
     
     public MyWorld() {
         super(950, 600, 1, false);
-        
+        drawBackground();
         drawLawn();
         drawLawnmowers();
         drawSeedSlots();
@@ -40,7 +40,20 @@ public class MyWorld extends World {
         addObject(sunDisplay, 100,100);
         currentDisplay = sunDisplay;
     }
-    
+    private void drawBackground() {
+        int tileColor = 1;
+        for (int i = 0; i < 15; i++) {
+            for (int x = 0; x < 15; x++) {
+                BackPiece back = new BackPiece();
+                back.setTileColor(tileColor);
+                int tileWidth = back.getImage().getWidth();
+                int tileHeight = back.getImage().getHeight();
+                tileColor = tileColor * -1;
+                addObject(back, (x * tileWidth), ((i * tileHeight)));
+                
+            }
+        }
+    }
     private void spawnZombies() {
         gracePeriod--;
         if (gracePeriod <= 0) {
