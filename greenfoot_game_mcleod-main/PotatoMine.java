@@ -18,9 +18,9 @@ public class PotatoMine extends Plant
     public PotatoMine (int row, int col) {
         super(row,col);
         this.sunCost = 25;
-        this.rechargeTime = 1800;
-        this.startCharge = false;
-        setImage("PotatoMineWhite.png");
+        this.rechargeTime = 0;
+        this.startCharge = true;
+        setImage("PotatoMineRed.png");
     }
     public void act()
     {
@@ -48,9 +48,12 @@ public class PotatoMine extends Plant
                 List<Zombie> exploded = getObjectsInRange(200, Zombie.class);
                 for (int i = 0; i < exploded.size(); i++) {
                     Zombie zomb = exploded.get(i);
-                    getWorld().removeObject(zomb);
-                    //make some exploding ainmation here
-                    getWorld().removeObject(this);
+                    if (zomb.row == row) {
+                        zomb.die();
+                        //make some exploding ainmation here
+                        getWorld().removeObject(this);
+                        this.tile.setPlant(null);
+                    }
                 }
             }
         }

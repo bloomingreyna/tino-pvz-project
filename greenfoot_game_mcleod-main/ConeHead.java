@@ -14,15 +14,16 @@ public class ConeHead extends Zombie
      */
     
     
-    public ConeHead(int row, int col) {
-        super(row,col);
+    public ConeHead(int row) {
+        super(row);
         this.health = 640;    
     }
     public void act(){
         super.act();
         if(health<=200){
-            setImage("ezgif-89690f8ebfb687.png");
-            getImage().scale(100,100);
+            GreenfootImage damaged = new GreenfootImage("ezgif-89690f8ebfb687.png");
+            damaged.scale(100, 100);
+            setImage(damaged);
         }
     }
 }

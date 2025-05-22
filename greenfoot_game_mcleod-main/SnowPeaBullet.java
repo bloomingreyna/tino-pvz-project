@@ -9,7 +9,7 @@
 public class SnowPeaBullet extends Pea
 {
     public SnowPeaBullet() {
-        super();
+        getImage().scale(30, 30);
     }
     
     protected void onHit(Zombie z) {

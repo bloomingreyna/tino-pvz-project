@@ -25,13 +25,17 @@ public class Peashooter extends Plant
     {
         // Add your action code here.
         List <Zombie> zombs = getWorld().getObjects(Zombie.class);
+        wait++;
         for (int i =0 ; i < zombs.size(); i++) {
             Zombie zomb = zombs.get(i);
-            wait++;
 
-            if (zomb.row == row && wait >= 85) {
+            if (wait >= 85 && zomb.row == row && zomb.isActive()) {
                 shoot();
             }
+        }
+        
+        if (wait >= 85) {
+            wait = 0;
         }
     }
     
@@ -39,6 +43,5 @@ public class Peashooter extends Plant
         Pea pea = new Pea();
         
         getWorld().addObject(pea, getX(), getY());
-        wait = 0;
     }
 }
