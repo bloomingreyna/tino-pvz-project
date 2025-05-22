@@ -55,7 +55,11 @@ public class MyWorld extends World {
                     int row = Greenfoot.getRandomNumber(5);
                     int y = (row * 105) + getHeight() - 105 / 2 * 9;
                     Zombie z = null;
-                    if (Greenfoot.getRandomNumber(100) < 30 && currentWave > 1) {
+                    
+                    if ((Math.random()*100) < 15 * (1 + (currentWave*0.1)) && currentWave > 5) {
+                        z = new BucketHead(row);
+                        
+                    } else if ((Math.random()*100) < 30 * (1 + (currentWave*0.1)) && currentWave > 1) {
                         z = new ConeHead(row);
                     } else {
                         z = new Zombie(row);
