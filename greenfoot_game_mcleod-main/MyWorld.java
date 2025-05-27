@@ -8,6 +8,7 @@ public class MyWorld extends World {
     public static int mouseCol = -1;
     public static SeedSlot selectedSlot = null;
     public boolean start = false;
+    
     int gracePeriod = 1800;
     int waveMaxGap = 1200;
     int waveGap = 0;
@@ -15,6 +16,7 @@ public class MyWorld extends World {
     int zombieIncreaseGap = maxZombieIncreaseGap;
     int currentWave = 0;
     int amountOfZombiesToSpawn = 1;
+    boolean fastForward = false;
     
     SunDisplay currentDisplay = null;
     
@@ -141,14 +143,26 @@ public class MyWorld extends World {
             if (gracePeriod == 0) {
                 Greenfoot.playSound("awooga.wav");
             }
+            
+            if (!fastForward && getObjects(Zombie.class).size() == 0) {
+                fastForward = true;
+                waveGap = (int) Math.ceil(waveGap * 0.5);
+            }
+            
             waveGap--;
             if (waveGap <= 0) {
+                fastForward = false;
                 waveGap = waveMaxGap;
                 if (waveMaxGap > 120) {
                     waveMaxGap -= 10;
                 }
                 currentWave++;
-                for (int i = 0; i < amountOfZombiesToSpawn; i++) {
+                
+                if (currentWave % 5 == 0) {
+                    Greenfoot.playSound("hugewave.wav");
+                }
+                
+                for (int i = 0; i < (currentWave % 5 != 0 ? amountOfZombiesToSpawn : amountOfZombiesToSpawn * 3); i++) {
                     int row = Greenfoot.getRandomNumber(5);
                     int y = (row * 105) + getHeight() - 105 / 2 * 9;
                     Zombie z = null;
