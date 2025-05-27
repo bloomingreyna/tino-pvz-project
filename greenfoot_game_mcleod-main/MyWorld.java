@@ -20,6 +20,8 @@ public class MyWorld extends World {
     
     public MyWorld() {
         super(950, 600, 1, false);
+        Sun.sun = 50;
+        
         drawBackground();
         drawLawn();
         drawLawnmowers();

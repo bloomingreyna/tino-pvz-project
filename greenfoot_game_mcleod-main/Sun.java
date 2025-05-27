@@ -13,7 +13,7 @@ public class Sun extends Actor
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     int stopY;
-    static int sun = 1000;
+    static int sun;
     boolean goToSun = false;
     public Sun() {
         getImage().scale(50,50);

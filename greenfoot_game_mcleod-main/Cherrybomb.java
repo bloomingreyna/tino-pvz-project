@@ -22,7 +22,7 @@ public class Cherrybomb extends Plant
         super(row, col);
         this.sunCost = 150;
         this.rechargeTime = 3000;
-        this.startCharge = true;
+        this.startCharge = false;
     }
     
     public void act()
