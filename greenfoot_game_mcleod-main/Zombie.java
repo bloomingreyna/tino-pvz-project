@@ -7,8 +7,8 @@ public class Zombie extends Actor {
     private int causeOfDeath = 0;
     
     protected int speed = -1;
-    protected int moveDurationMax = 40 + Greenfoot.getRandomNumber(10);
-    protected int stopDurationMax = 80 + Greenfoot.getRandomNumber(10);
+    protected int moveDurationMax = 40 + Greenfoot.getRandomNumber(8);
+    protected int stopDurationMax = 80 + Greenfoot.getRandomNumber(8);
     protected int moveDuration;
     protected int stopDuration;
     private boolean moving = true;
@@ -18,6 +18,10 @@ public class Zombie extends Actor {
     
     protected int eatDurationMax = 30;
     protected int eatDuration;
+    protected boolean playEatSound = true;
+    
+    private int groanMax = 300;
+    private int groan = groanMax;
     
     protected int health = 200;
     protected int damage = 50;
@@ -25,13 +29,14 @@ public class Zombie extends Actor {
     protected int row = -1;
     protected int col = -1;
     
-    private GreenfootImage debugBall = new GreenfootImage("ball.png");
+    protected boolean frozen = false;
+    
     private int sensorX;
     private int sensorY;
     
     private int walkStart = Greenfoot.getRandomNumber(75);
     private boolean active = false;
-    
+    int freezeCount = 0;
     public Zombie(int row) {
         this.moveDuration = moveDurationMax;
         this.stopDuration = stopDurationMax;
@@ -43,18 +48,21 @@ public class Zombie extends Actor {
         int y = getImage().getHeight() / 2 - 10;
         sensorX = x - getImage().getWidth() / 2;
         sensorY = y - getImage().getWidth() / 2;
-        getImage().drawImage(debugBall, x, y);
     }
     
     public void act() {
-        if (getX() < -getImage().getWidth()) {
-            getWorld().removeObject(this);
-            return;
-        }
         
         walkStart--;
         if (walkStart <= 0) {
             active = true;
+            
+            groan--;
+            if (groan == 0) {
+                groan = groanMax;
+                String groanType = Integer.toString(Greenfoot.getRandomNumber(6) + 1);
+                Greenfoot.playSound("groan" + groanType + ".wav");
+            }
+            
             updateState();
             if (state == 0) {
                 moveBehavior();
@@ -68,6 +76,10 @@ public class Zombie extends Actor {
                 die();
             }
         }
+        if (this.frozen) {
+            freeze();
+        }
+        
     }
     
     private void updateState() {
@@ -122,6 +134,12 @@ public class Zombie extends Actor {
         eatDuration--;
         if (eatDuration == 0) {
             eatDuration = eatDurationMax;
+            if (playEatSound) {
+                Greenfoot.playSound("chompsoft.wav");
+                playEatSound = false;
+            } else {
+                playEatSound = true;
+            }
             Actor plant = getOneIntersectingObject(Plant.class);
             Plant p = (Plant) plant;
             p.setHealth(p.getHealth() - damage);
@@ -145,6 +163,10 @@ public class Zombie extends Actor {
         return health;
     }
     
+    public void setFrozen(boolean f) {
+        this.frozen = f;
+    }
+    
     public void setHealth(int health) {
         this.health = health;
     }
@@ -164,7 +186,20 @@ public class Zombie extends Actor {
     public void slow() {
         slowTime = slowTimeMax;
     }
-    
+    public void freeze() {
+        setImage("FrozenZombie.png");
+        getImage().scale(100,100);
+        speed = 0;
+        if (freezeCount >= 600) {
+            speed = -1;
+            setImage("ezgif-89690f8ebfb687.png");
+            getImage().scale(100,100);
+        }
+        freezeCount++;
+    }
+    public void thaw() {
+        speed = -1;
+    }
     public boolean isActive() {
         return active;
     }
