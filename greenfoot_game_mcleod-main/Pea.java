@@ -28,6 +28,7 @@ public class Pea extends Projecticle
     }
     
     protected void onHit(Zombie z) {
+        Greenfoot.playSound("splat.wav");
         z.setHealth(z.getHealth() - damage);
         getWorld().removeObject(this);
     }

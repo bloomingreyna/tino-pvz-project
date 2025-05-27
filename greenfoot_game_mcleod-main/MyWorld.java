@@ -22,6 +22,8 @@ public class MyWorld extends World {
     private boolean gameOver = false;
     public MyWorld() {
         super(950, 600, 1, false);
+        Greenfoot.setSpeed(50);
+        
         Sun.sun = 50;
         if (start == false) {
             
@@ -32,8 +34,6 @@ public class MyWorld extends World {
     int count = 0;
     
     public void act() {
-        
-
         if (Greenfoot.isKeyDown("a") && !start) {
             start = true;
             removeObject(title);
@@ -148,6 +148,7 @@ public class MyWorld extends World {
                     selectedSlot.depleteCharge();
                     tile.setPlant(p);
                     p.tile = tile;
+                    Greenfoot.playSound("plant.wav");
                 } catch (InstantiationException x) {
                     x.printStackTrace();
                 } catch (IllegalAccessException x) {

@@ -7,8 +7,8 @@ public class Zombie extends Actor {
     private int causeOfDeath = 0;
     
     protected int speed = -1;
-    protected int moveDurationMax = 40 + Greenfoot.getRandomNumber(10);
-    protected int stopDurationMax = 80 + Greenfoot.getRandomNumber(10);
+    protected int moveDurationMax = 40 + Greenfoot.getRandomNumber(8);
+    protected int stopDurationMax = 80 + Greenfoot.getRandomNumber(8);
     protected int moveDuration;
     protected int stopDuration;
     private boolean moving = true;
@@ -18,6 +18,10 @@ public class Zombie extends Actor {
     
     protected int eatDurationMax = 30;
     protected int eatDuration;
+    protected boolean playEatSound = true;
+    
+    private int groanMax = 300;
+    private int groan = groanMax;
     
     protected int health = 200;
     protected int damage = 50;
@@ -49,6 +53,14 @@ public class Zombie extends Actor {
         walkStart--;
         if (walkStart <= 0) {
             active = true;
+            
+            groan--;
+            if (groan == 0) {
+                groan = groanMax;
+                String groanType = Integer.toString(Greenfoot.getRandomNumber(6) + 1);
+                Greenfoot.playSound("groan" + groanType + ".wav");
+            }
+            
             updateState();
             if (state == 0) {
                 moveBehavior();
@@ -118,6 +130,12 @@ public class Zombie extends Actor {
         eatDuration--;
         if (eatDuration == 0) {
             eatDuration = eatDurationMax;
+            if (playEatSound) {
+                Greenfoot.playSound("chompsoft.wav");
+                playEatSound = false;
+            } else {
+                playEatSound = true;
+            }
             Actor plant = getOneIntersectingObject(Plant.class);
             Plant p = (Plant) plant;
             p.setHealth(p.getHealth() - damage);

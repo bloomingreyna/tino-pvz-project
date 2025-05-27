@@ -14,7 +14,7 @@ public class PotatoMine extends Plant
      */
     int health = 99999;
     int count = 0;
-    int count2 = 0;
+    int count2 = 99;
     public PotatoMine (int row, int col) {
         super(row,col);
         this.sunCost = 25;
@@ -46,20 +46,21 @@ public class PotatoMine extends Plant
             health = 100;
             
             Actor zombie = getOneIntersectingObject(Zombie.class);
-            if (zombie != null) {
+            if (zombie != null && Math.abs(getX() - zombie.getX()) <= 40) {
                 Zombie z = (Zombie) zombie;
                 if (z.row == row);
-                    List<Zombie> exploded = getObjectsInRange(200, Zombie.class);
-                    for (int i = 0; i < exploded.size(); i++) {
+                List<Zombie> exploded = getObjectsInRange(40, Zombie.class);
+                for (int i = 0; i < exploded.size(); i++) {
                     Zombie zomb = exploded.get(i);
                     if (zomb.row == row) {
                         zomb.die();
                         //make some exploding ainmation here
                         
                     }
-                    getWorld().removeObject(this);
-                    this.tile.setPlant(null);
+                
                 }
+                getWorld().removeObject(this);
+                this.tile.setPlant(null);
             }
         }
     }
