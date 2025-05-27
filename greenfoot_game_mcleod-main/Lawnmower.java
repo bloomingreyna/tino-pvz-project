@@ -30,6 +30,7 @@ public class Lawnmower extends Actor
                 if (!go) {
                     Greenfoot.playSound("lawnmower.wav");
                     go = true;
+                    MyWorld.lawnmowerSpawnArr[row] = 1200;
                 }
             }
         }

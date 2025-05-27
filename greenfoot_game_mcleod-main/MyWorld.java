@@ -18,6 +18,8 @@ public class MyWorld extends World {
     int amountOfZombiesToSpawn = 1;
     boolean fastForward = false;
     
+    public static int[] lawnmowerSpawnArr = {0, 0, 0, 0, 0};
+    
     SunDisplay currentDisplay = null;
     
     GreenfootSound music = new GreenfootSound("Grasswalk (In-Game).mp3");
@@ -138,6 +140,10 @@ public class MyWorld extends World {
     }
     
     private void spawnZombies() {
+        for (int i = 0; i < lawnmowerSpawnArr.length; i++) {
+            lawnmowerSpawnArr[i]--;
+        }
+        
         gracePeriod--;
         if (gracePeriod <= 0) {
             if (gracePeriod == 0) {
@@ -162,20 +168,25 @@ public class MyWorld extends World {
                     Greenfoot.playSound("hugewave.wav");
                 }
                 
-                for (int i = 0; i < (currentWave % 5 != 0 ? amountOfZombiesToSpawn : amountOfZombiesToSpawn * 3); i++) {
-                    int row = Greenfoot.getRandomNumber(5);
-                    int y = (row * 105) + getHeight() - 105 / 2 * 9;
-                    Zombie z = null;
-                    
-                    if ((Math.random()*100) < 10 * (1 + (currentWave*0.1)) && currentWave > 10) {
-                        z = new BucketHead(row);
+                if (canSpawnZombies()) {
+                    for (int i = 0; i < (currentWave % 5 != 0 ? amountOfZombiesToSpawn : amountOfZombiesToSpawn * 3); i++) {
+                        int row = Greenfoot.getRandomNumber(5);
+                        while (lawnmowerSpawnArr[row] > 0) {
+                            row = Greenfoot.getRandomNumber(5);
+                        }
+                        int y = (row * 105) + getHeight() - 105 / 2 * 9;
+                        Zombie z = null;
                         
-                    } else if ((Math.random()*100) < 25 * (1 + (currentWave*0.1)) && currentWave > 5) {
-                        z = new ConeHead(row);
-                    } else {
-                        z = new Zombie(row);
+                        if ((Math.random()*100) < 10 * (1 + (currentWave*0.1)) && currentWave > 10) {
+                            z = new BucketHead(row);
+                            
+                        } else if ((Math.random()*100) < 25 * (1 + (currentWave*0.1)) && currentWave > 5) {
+                            z = new ConeHead(row);
+                        } else {
+                            z = new Zombie(row);
+                        }
+                        addObject(z, getWidth(), y);
                     }
-                    addObject(z, getWidth(), y);
                 }
                 
                 if (zombieIncreaseGap <= 0) {
@@ -187,6 +198,16 @@ public class MyWorld extends World {
                 }
             }
         }
+    }
+    
+    private boolean canSpawnZombies() {
+        int numRows = 0;
+        for (int i = 0; i < lawnmowerSpawnArr.length; i++) {
+            if (lawnmowerSpawnArr[i] > 0) {
+                numRows++;
+            }
+        }
+        return numRows != 5;
     }
     
     private void drawLawnmowers() {
