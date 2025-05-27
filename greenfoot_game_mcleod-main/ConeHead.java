@@ -28,6 +28,7 @@ public class ConeHead extends Zombie
             GreenfootImage damaged = new GreenfootImage("ezgif-89690f8ebfb687.png");
             damaged.scale(100, 100);
             setImage(damaged);
+            type = "Browncoat";
             changed = true;
             
             currentImage = damaged;
