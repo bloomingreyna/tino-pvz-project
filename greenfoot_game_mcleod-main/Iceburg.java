@@ -13,6 +13,8 @@ public class Iceburg extends Plant
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     int health = 999999999;
+    int count = 0;
+    boolean startCount = false;
     public Iceburg(int row, int col) {
         super(row, col);
         this.sunCost = 75;
@@ -25,11 +27,14 @@ public class Iceburg extends Plant
         if (isTouching(Zombie.class)) {
             Zombie zomb =(Zombie) getOneIntersectingObject(Zombie.class);
             if (zomb.row == row) {
-                zomb.slow();
+                zomb.setFrozen(true);
+                
+                
                 //do icy explosion animation here
                 getWorld().removeObject(this);
                 this.tile.setPlant(null);
             }
         }
+        
     }
 }
