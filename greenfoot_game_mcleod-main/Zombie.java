@@ -15,7 +15,7 @@ public class Zombie extends Actor {
     protected int stopDuration;
     private boolean moving = true;
     
-    private int slowTimeMax = 6000;
+    private int slowTimeMax = 600;
     int slowTime = 0;
     
     protected int eatDurationMax = 60; //30
