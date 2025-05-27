@@ -27,6 +27,7 @@ public class Cherrybomb extends Plant
     public void act()
     {
         // Add your action code here.
+        
         if (count >= 60) {
             List<Zombie> zombsExploded = getWorld().getObjects(Zombie.class);
             
@@ -40,6 +41,10 @@ public class Cherrybomb extends Plant
             getWorld().removeObject(this);
             this.tile.setPlant(null);
         }
+        
+        
+        
+        
         count++;
     }
 }
