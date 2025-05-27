@@ -14,25 +14,29 @@ public class PotatoMine extends Plant
      */
     int health = 99999;
     int count = 0;
-    int count2 = 0;
+    int count2 = 99;
+    boolean risen = false;
     public PotatoMine (int row, int col) {
         super(row,col);
         this.sunCost = 25;
-        this.rechargeTime = 0;
-        this.startCharge = true;
+        this.rechargeTime = 1800;
+        this.startCharge = false;
         setImage("PotatoMineRed.png");
     }
     public void act()
     {
         // Add your action code here.
         count++;
-        if (count < 900) {
+        if (count < 600) {
             setImage("PotatoMineUnarmed.png");
             getImage().scale(50,50);
         }
-        if (count >= 900) {
+        if (count >= 600) {
             //change image;
-            
+            if (!risen) {
+                risen = true;
+                Greenfoot.playSound("dirt_rise.wav");
+            }
             count2++;
             if (count2 == 100) {
                 setImage("PotatoMineRed.png");
@@ -44,17 +48,24 @@ public class PotatoMine extends Plant
                 count2 = 0;
             }
             health = 100;
-            if (isTouching(Zombie.class)) {
-                List<Zombie> exploded = getObjectsInRange(200, Zombie.class);
+            
+            Actor zombie = getOneIntersectingObject(Zombie.class);
+            if (zombie != null && Math.abs(getX() - zombie.getX()) <= 40) {
+                Zombie z = (Zombie) zombie;
+                if (z.row == row);
+                List<Zombie> exploded = getObjectsInRange(40, Zombie.class);
                 for (int i = 0; i < exploded.size(); i++) {
                     Zombie zomb = exploded.get(i);
                     if (zomb.row == row) {
                         zomb.die();
                         //make some exploding ainmation here
-                        getWorld().removeObject(this);
-                        this.tile.setPlant(null);
+                        
                     }
+                
                 }
+                Greenfoot.playSound("potato_mine.wav");
+                getWorld().removeObject(this);
+                this.tile.setPlant(null);
             }
         }
     }

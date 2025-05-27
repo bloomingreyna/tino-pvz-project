@@ -12,7 +12,7 @@ public class Sunflower extends Plant
      * Act - do whatever the Sunflower wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
-    int count = 0;
+    int count = 1020;
     public Sunflower(int row, int col) {
         super(row, col);
         getImage().scale(100,100);
@@ -26,7 +26,7 @@ public class Sunflower extends Plant
         super.act();
         count++;
         if (count == 1380) {
-            Sun sun = new Sun();
+            Sun sun = new Sun(true);
             getWorld().addObject(sun, getX(), getY());
             setImage("light_sunflower.png");
             getImage().scale(100,100);

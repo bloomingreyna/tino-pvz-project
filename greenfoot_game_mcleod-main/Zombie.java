@@ -6,18 +6,24 @@ public class Zombie extends Actor {
     //Death causes: 0 = normal, 1 = explode, 2 = disappear
     private int causeOfDeath = 0;
     
+    protected String type = "Browncoat";
+    
     protected int speed = -1;
-    protected int moveDurationMax = 40 + Greenfoot.getRandomNumber(10);
-    protected int stopDurationMax = 80 + Greenfoot.getRandomNumber(10);
+    protected int moveDurationMax = 40 + Greenfoot.getRandomNumber(8);
+    protected int stopDurationMax = 80 + Greenfoot.getRandomNumber(8);
     protected int moveDuration;
     protected int stopDuration;
     private boolean moving = true;
     
-    private int slowTimeMax = 120;
-    private int slowTime = 0;
+    private int slowTimeMax = 6000;
+    int slowTime = 0;
     
-    protected int eatDurationMax = 30;
+    protected int eatDurationMax = 60; //30
     protected int eatDuration;
+    protected boolean playEatSound = true;
+    
+    private int groanMax = 300;
+    private int groan = groanMax;
     
     protected int health = 200;
     protected int damage = 50;
@@ -25,41 +31,51 @@ public class Zombie extends Actor {
     protected int row = -1;
     protected int col = -1;
     
-    private GreenfootImage debugBall = new GreenfootImage("ball.png");
+    protected boolean frozen = false;
+    
     private int sensorX;
     private int sensorY;
     
+    protected GreenfootImage frozenImage;
+    protected GreenfootImage currentImage;
+    
     private int walkStart = Greenfoot.getRandomNumber(75);
     private boolean active = false;
-    
+    int freezeCount = 0;
     public Zombie(int row) {
         this.moveDuration = moveDurationMax;
         this.stopDuration = stopDurationMax;
         this.eatDuration = eatDurationMax;
         this.row = row;
         getImage().scale(100,100);
+        currentImage = getImage();
+        frozenImage = new GreenfootImage("FrozenZombie.png");
+        frozenImage.scale(100, 100);
         
         int x = getImage().getWidth() / 2 + 15;
         int y = getImage().getHeight() / 2 - 10;
         sensorX = x - getImage().getWidth() / 2;
         sensorY = y - getImage().getWidth() / 2;
-        getImage().drawImage(debugBall, x, y);
     }
     
     public void act() {
-        if (getX() < -getImage().getWidth()) {
-            getWorld().removeObject(this);
-            return;
-        }
         
         walkStart--;
         if (walkStart <= 0) {
             active = true;
+            
+            groan--;
+            if (groan == 0) {
+                groan = groanMax;
+                String groanType = Integer.toString(Greenfoot.getRandomNumber(6) + 1);
+                Greenfoot.playSound("groan" + groanType + ".wav");
+            }
+            
             updateState();
             if (state == 0) {
                 moveBehavior();
                 eatDuration = eatDurationMax;
-            } else if (state == 1) {
+            } else if (state == 1 && !frozen) {
                 onPlantBehavior();
                 moving = true;
                 moveDuration = moveDurationMax;
@@ -67,6 +83,15 @@ public class Zombie extends Actor {
             } else if (state == 2) {
                 die();
             }
+        }
+        if (this.frozen) {
+            freeze();
+        }
+        
+        if (slowTime > 0 || frozen) {
+            setImage(frozenImage);
+        } else {
+            setImage(currentImage);
         }
     }
     
@@ -106,31 +131,39 @@ public class Zombie extends Actor {
             stopDuration = stopDurationMax * (slowTime > 0 ? 2 : 1);
         }
         
-        if (moving) {
+        if (moving && !frozen) {
             move(speed);
             if (slowTime > 0) {
                 moveDuration -= 2;
             } else {
                 moveDuration--;
             }
-        } else {
+        } else if (!frozen) {
             stopDuration--;
         }
     }
     
     protected void onPlantBehavior() {
         eatDuration--;
+        if (slowTime > 0) {
+            eatDuration--;
+        } else {
+            eatDuration -= 2;
+        }
         if (eatDuration == 0) {
             eatDuration = eatDurationMax;
-            Actor plant = getOneIntersectingObject(Plant.class);
-            Plant p = (Plant) plant;
+            if (playEatSound) {
+                Greenfoot.playSound("chompsoft.wav");
+                playEatSound = false;
+            } else {
+                playEatSound = true;
+            }
+            LawnPiece l = (LawnPiece) getOneObjectAtOffset(sensorX, sensorY, LawnPiece.class);
+            Plant p = l.getPlant();
             p.setHealth(p.getHealth() - damage);
             if (p.getHealth() <= 0) {
-                Actor l = getOneObjectAtOffset(sensorX, sensorY, LawnPiece.class);
-                if (l != null) {
-                    LawnPiece lawnPiece = (LawnPiece) l;
-                    lawnPiece.setPlant(null);
-                }
+                l.setPlant(null);
+                Greenfoot.playSound("gulp.wav");
             }
         }
     }
@@ -138,11 +171,16 @@ public class Zombie extends Actor {
     protected void die() {
         if (causeOfDeath == 0) {
             getWorld().removeObject(this);
+            Greenfoot.playSound("zombie_falling_1.wav");
         }
     }
     
     public int getHealth() {
         return health;
+    }
+    
+    public void setFrozen(boolean f) {
+        this.frozen = f;
     }
     
     public void setHealth(int health) {
@@ -164,8 +202,21 @@ public class Zombie extends Actor {
     public void slow() {
         slowTime = slowTimeMax;
     }
-    
+    public void freeze() {
+        setImage(frozenImage);
+        freezeCount++;
+        if (freezeCount >= 600) {
+            frozen = false;
+            setImage(currentImage);
+            freezeCount = 0;
+            slow();
+        }
+    }
     public boolean isActive() {
         return active;
+    }
+    
+    public String getType() {
+        return type;
     }
 }

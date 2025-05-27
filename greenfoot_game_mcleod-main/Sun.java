@@ -13,10 +13,15 @@ public class Sun extends Actor
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     int stopY;
-    static int sun = 1000;
+    static int sun = 50;
     boolean goToSun = false;
-    public Sun() {
+    boolean producedByFlower;
+    boolean stop = false;
+    int speed = 10;
+    final int STOP_SPEED = -14;
+    public Sun(boolean producedByFlower) {
         getImage().scale(50,50);
+        this.producedByFlower = producedByFlower;
     }
     public void addedToWorld(World world) {
         Random rand = new Random();
@@ -24,20 +29,29 @@ public class Sun extends Actor
         
     }
     public void act()
-    {
-        // Maybe have something different for suns that come out of sunflowers?
-        if (goToSun == false && getY() < stopY) {
+    {// Maybe have something different for suns that come out of sunflowers?
+            
+        
+        if (producedByFlower && !stop && !goToSun) {
+            turn(-90);
+            move(speed);
+            turn(90);
+            speed--;
+            if (speed == STOP_SPEED) {
+                stop = true;
+            }
+        } else if (!producedByFlower && goToSun == false && getY() < stopY) {
             setLocation(getX(), getY() + 1);
         }
 
         if (Greenfoot.mouseClicked(this) && goToSun == false) {
-            turnTowards(100,100);
-
+            turnTowards(35,35);
+            Greenfoot.playSound("points.wav");
             goToSun = true;
             sun += 25;
         }
         if (goToSun) {
-            turnTowards(100,100);
+            turnTowards(35,35);
             move(10);
             if (isTouching(SunDisplay.class)) {
                 goToSun = false;
