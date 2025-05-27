@@ -14,6 +14,9 @@ public class SnowPeaBullet extends Pea
     
     protected void onHit(Zombie z) {
         super.onHit(z);
+        if (z.slowTime <= 0) {
+            Greenfoot.playSound("frozen.wav");
+        }
         z.slow();
     }
 }

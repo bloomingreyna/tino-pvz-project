@@ -1,4 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import java.util.List;
 
 /**
  * Write a description of class Lawnmower here.
@@ -21,14 +22,15 @@ public class Lawnmower extends Actor
     }
     public void act()
     {
-        // Add your action code here.
-        Actor zomb = getOneIntersectingObject(Zombie.class);
-        if (zomb != null) {
-            Zombie dude = (Zombie)zomb;
-            if (dude.row == row) {
-                go = true;
-                dude.setHealth(0);
-                dude.setCauseOfDeath(0);
+        List<Zombie> zombies = getIntersectingObjects(Zombie.class);
+        for (int i = 0; i < zombies.size(); i++) {
+            Zombie z = zombies.get(i);
+            if (z.row == row) {
+                z.setHealth(0);
+                if (!go) {
+                    Greenfoot.playSound("lawnmower.wav");
+                    go = true;
+                }
             }
         }
         

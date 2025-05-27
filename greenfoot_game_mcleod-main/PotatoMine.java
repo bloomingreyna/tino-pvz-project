@@ -59,6 +59,7 @@ public class PotatoMine extends Plant
                     }
                 
                 }
+                Greenfoot.playSound("cherrybomb.wav");
                 getWorld().removeObject(this);
                 this.tile.setPlant(null);
             }

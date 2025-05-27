@@ -8,25 +8,28 @@ public class MyWorld extends World {
     public static int mouseCol = -1;
     public static SeedSlot selectedSlot = null;
     public boolean start = false;
-    int gracePeriod = 1500;
-    int waveMaxGap = 1020;
+    int gracePeriod = 1800;
+    int waveMaxGap = 1200;
     int waveGap = 0;
-    int maxZombieIncreaseGap = 2;
-    int zombieIncreaseGap = 2;
+    int maxZombieIncreaseGap = 4;
+    int zombieIncreaseGap = maxZombieIncreaseGap;
     int currentWave = 0;
     int amountOfZombiesToSpawn = 1;
     
     SunDisplay currentDisplay = null;
+    
+    GreenfootSound music = new GreenfootSound("Grasswalk (In-Game).mp3");
+    GreenfootSound mainMenuTrack = new GreenfootSound("Plants vs Zombies Soundtrack - Main Menu.mp3");
+    
+    Shovel shovel = new Shovel();
 
     TitleScreen title = new TitleScreen();
     private boolean gameOver = false;
     public MyWorld() {
         super(950, 600, 1, false);
         Greenfoot.setSpeed(50);
-        
         Sun.sun = 50;
         if (start == false) {
-            
             addObject(title,getWidth()/2,getHeight()/2);
         } 
     }
@@ -34,6 +37,9 @@ public class MyWorld extends World {
     int count = 0;
     
     public void act() {
+        if (!start && !mainMenuTrack.isPlaying()) {
+            mainMenuTrack.playLoop();
+        }
         if (Greenfoot.isKeyDown("a") && !start) {
             start = true;
             removeObject(title);
@@ -41,8 +47,10 @@ public class MyWorld extends World {
             drawLawn();
             drawLawnmowers();
             drawSeedSlots();
+            music.playLoop();
+            mainMenuTrack.stop();
         }
-        if (start == true) {
+        if (start == true && !gameOver) {
             
             updateMousePosition();
             spawnSun();
@@ -51,12 +59,10 @@ public class MyWorld extends World {
                 spawnZombies();
             }
             
-            Sun suns = new Sun();
-            int sunAmnt = suns.getSun();
+            int sunAmnt = Sun.sun;
             if (currentDisplay != null) {
                 removeObject(currentDisplay);
             }
-            
             
             SunDisplay sunDisplay = new SunDisplay("Suns: " + sunAmnt, 25, Color.YELLOW, Color.BLACK);
             addObject(sunDisplay, 100,100);
@@ -71,7 +77,10 @@ public class MyWorld extends World {
             Zombie zombie = zombies.get(i);
             if(zombie.getX() <= 0){
                 gameOver = true;
+                removeObjects(getObjects(null));
                 addObject(new GameOverScreen(), getWidth() / 2, getHeight() / 2);
+                Greenfoot.playSound("scream.wav");
+                music.stop();
                 return;
             }
         }
@@ -87,7 +96,6 @@ public class MyWorld extends World {
                 int tileHeight = back.getImage().getHeight();
                 tileColor = tileColor * -1;
                 addObject(back, (x * tileWidth), ((i * tileHeight)));
-                
             }
         }
     }
@@ -95,11 +103,14 @@ public class MyWorld extends World {
     private void spawnZombies() {
         gracePeriod--;
         if (gracePeriod <= 0) {
+            if (gracePeriod == 0) {
+                Greenfoot.playSound("awooga.wav");
+            }
             waveGap--;
             if (waveGap <= 0) {
                 waveGap = waveMaxGap;
                 if (waveMaxGap > 120) {
-                    waveMaxGap -= 25;
+                    waveMaxGap -= 10;
                 }
                 currentWave++;
                 for (int i = 0; i < amountOfZombiesToSpawn; i++) {
@@ -107,10 +118,10 @@ public class MyWorld extends World {
                     int y = (row * 105) + getHeight() - 105 / 2 * 9;
                     Zombie z = null;
                     
-                    if ((Math.random()*100) < 15 * (1 + (currentWave*0.1)) && currentWave > 5) {
+                    if ((Math.random()*100) < 10 * (1 + (currentWave*0.1)) && currentWave > 10) {
                         z = new BucketHead(row);
                         
-                    } else if ((Math.random()*100) < 30 * (1 + (currentWave*0.1)) && currentWave > 1) {
+                    } else if ((Math.random()*100) < 25 * (1 + (currentWave*0.1)) && currentWave > 5) {
                         z = new ConeHead(row);
                     } else {
                         z = new Zombie(row);
@@ -137,26 +148,42 @@ public class MyWorld extends World {
     }
     
     private void placePlant() {
-        if (selectedSlot != null) {
-            LawnPiece tile = getTileAtMouse();
-            if (tile != null && Greenfoot.mouseClicked(null)) {
-                try {
-                    MouseInfo mouse = Greenfoot.getMouseInfo();
-                    Plant p = (Plant) selectedSlot.getPlant().newInstance(mouseRow, mouseCol);
-                    addObject(p, tile.getX(), tile.getY());
-                    Sun.sun -= p.sunCost;
-                    selectedSlot.depleteCharge();
-                    tile.setPlant(p);
-                    p.tile = tile;
-                    Greenfoot.playSound("plant.wav");
-                } catch (InstantiationException x) {
-                    x.printStackTrace();
-                } catch (IllegalAccessException x) {
-                    x.printStackTrace();
-                } catch (InvocationTargetException x) {
-                    x.printStackTrace();
-                }
+        if (Greenfoot.isKeyDown("z") && selectedSlot != null) {
             selectedSlot = null;
+            Greenfoot.playSound("buttonclick.wav");
+        }
+        
+        if (selectedSlot != null || shovel.active) {
+            LawnPiece tile = getTileAtMouse();
+            if (tile != null) {
+                if (Greenfoot.mouseClicked(null) && tile.getPlant() == null && !shovel.active) {
+                    try {
+                        MouseInfo mouse = Greenfoot.getMouseInfo();
+                        Plant p = (Plant) selectedSlot.getPlant().newInstance(mouseRow, mouseCol);
+                        addObject(p, tile.getX(), tile.getY());
+                        Sun.sun -= p.sunCost;
+                        selectedSlot.depleteCharge();
+                        tile.setPlant(p);
+                        p.tile = tile;
+                        Greenfoot.playSound("plant.wav");
+                    } catch (InstantiationException x) {
+                        x.printStackTrace();
+                    } catch (IllegalAccessException x) {
+                        x.printStackTrace();
+                    } catch (InvocationTargetException x) {
+                        x.printStackTrace();
+                    }
+                    selectedSlot = null;
+                } else if (shovel.active && Greenfoot.mouseClicked(null)) {
+                    shovel.active = false;
+                    if (tile.getPlant() != null) {
+                        removeObject(tile.getPlant());
+                        tile.setPlant(null);
+                        Greenfoot.playSound("plant.wav");
+                    } else {
+                        Greenfoot.playSound("buttonclick.wav");
+                    }
+                }
             }
         }
     }
@@ -197,7 +224,7 @@ public class MyWorld extends World {
         if (count == 600) {
             Random rand = new Random();
             int randX = rand.nextInt(getWidth());
-            Sun sun = new Sun();
+            Sun sun = new Sun(false);
             addObject(sun, randX, 0);
             count = 0;
         }
@@ -259,5 +286,7 @@ public class MyWorld extends World {
             int slotHeight = seedSlot.getImage().getHeight();
             addObject(seedSlot, i * (slotWidth + 3) + 105, slotHeight / 2 + 5);
         }
+        
+        addObject(shovel, plantRefs.length * 73 + 105, 42);
     }
 }

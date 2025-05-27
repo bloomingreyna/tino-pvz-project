@@ -26,7 +26,7 @@ public class Sunflower extends Plant
         super.act();
         count++;
         if (count == 1380) {
-            Sun sun = new Sun();
+            Sun sun = new Sun(true);
             getWorld().addObject(sun, getX(), getY());
             setImage("light_sunflower.png");
             getImage().scale(100,100);
