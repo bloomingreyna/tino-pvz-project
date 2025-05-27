@@ -18,7 +18,7 @@ public class Iceburg extends Plant
     boolean startCount = false;
     public Iceburg(int row, int col) {
         super(row, col);
-        this.sunCost = 75;
+        this.sunCost = 0;
         this.rechargeTime = 1800;
         this.startCharge = false;
     }
