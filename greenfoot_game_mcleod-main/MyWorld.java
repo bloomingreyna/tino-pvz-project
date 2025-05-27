@@ -24,6 +24,7 @@ public class MyWorld extends World {
     Shovel shovel = new Shovel();
 
     TitleScreen title = new TitleScreen();
+    GameOverScreen gameOverScreen = new GameOverScreen();
     private boolean gameOver = false;
     public MyWorld() {
         super(950, 600, 1, false);
@@ -37,7 +38,7 @@ public class MyWorld extends World {
     int count = 0;
     
     public void act() {
-        if (!start && !mainMenuTrack.isPlaying()) {
+        if (!start && !mainMenuTrack.isPlaying() && !gameOver) {
             mainMenuTrack.playLoop();
         }
         if (Greenfoot.isKeyDown("a") && !start) {
@@ -64,11 +65,38 @@ public class MyWorld extends World {
                 removeObject(currentDisplay);
             }
             
-            SunDisplay sunDisplay = new SunDisplay("Suns: " + sunAmnt, 25, Color.YELLOW, Color.BLACK);
-            addObject(sunDisplay, 100,100);
+            SunDisplay sunDisplay = new SunDisplay("Sun:\n" + sunAmnt, 25, Color.YELLOW, Color.BLACK);
+            addObject(sunDisplay, 35,35);
             currentDisplay = sunDisplay;
             checkGameOver();
         }
+        
+        if (Greenfoot.isKeyDown("a") && gameOver) {
+            reset();
+        }
+    }
+    
+    private void reset() {
+        gameOver = false;
+        start = true;
+        
+        gracePeriod = 1800;
+        waveMaxGap = 1200;
+        waveGap = 0;
+        maxZombieIncreaseGap = 4;
+        zombieIncreaseGap = maxZombieIncreaseGap;
+        currentWave = 0;
+        amountOfZombiesToSpawn = 1;
+        
+        drawBackground();
+        drawLawn();
+        drawLawnmowers();
+        drawSeedSlots();
+        music.playLoop();
+        Sun.sun = 50;
+        
+        removeObject(gameOverScreen);
+        showText("", 640, 580);
     }
     
     private void checkGameOver(){
@@ -77,10 +105,17 @@ public class MyWorld extends World {
             Zombie zombie = zombies.get(i);
             if(zombie.getX() <= 0){
                 gameOver = true;
+                List<SeedSlot> seedSlots = getObjects(SeedSlot.class);
+                for (int j = 0; j < seedSlots.size(); j++) {
+                    SeedSlot slot = seedSlots.get(i);
+                    showText("", 125 + j * (slot.getImage().getWidth() + 3), slot.getY() + 30);
+                }
                 removeObjects(getObjects(null));
-                addObject(new GameOverScreen(), getWidth() / 2, getHeight() / 2);
+                addObject(gameOverScreen, getWidth() / 2, getHeight() / 2);
+                showText("Press A to restart", 640, 580);
                 Greenfoot.playSound("scream.wav");
                 music.stop();
+                start = false;
                 return;
             }
         }

@@ -45,13 +45,13 @@ public class Sun extends Actor
         }
 
         if (Greenfoot.mouseClicked(this) && goToSun == false) {
-            turnTowards(100,100);
+            turnTowards(35,35);
             Greenfoot.playSound("points.wav");
             goToSun = true;
             sun += 25;
         }
         if (goToSun) {
-            turnTowards(100,100);
+            turnTowards(35,35);
             move(10);
             if (isTouching(SunDisplay.class)) {
                 goToSun = false;

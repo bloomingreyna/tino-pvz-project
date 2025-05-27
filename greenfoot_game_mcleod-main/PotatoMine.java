@@ -26,11 +26,11 @@ public class PotatoMine extends Plant
     {
         // Add your action code here.
         count++;
-        if (count < 900) {
+        if (count < 600) {
             setImage("PotatoMineUnarmed.png");
             getImage().scale(50,50);
         }
-        if (count >= 900) {
+        if (count >= 600) {
             //change image;
             
             count2++;
