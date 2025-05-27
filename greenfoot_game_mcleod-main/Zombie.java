@@ -25,7 +25,6 @@ public class Zombie extends Actor {
     protected int row = -1;
     protected int col = -1;
     
-    private GreenfootImage debugBall = new GreenfootImage("ball.png");
     private int sensorX;
     private int sensorY;
     
@@ -43,14 +42,9 @@ public class Zombie extends Actor {
         int y = getImage().getHeight() / 2 - 10;
         sensorX = x - getImage().getWidth() / 2;
         sensorY = y - getImage().getWidth() / 2;
-        getImage().drawImage(debugBall, x, y);
     }
     
     public void act() {
-        if (getX() < -getImage().getWidth()) {
-            getWorld().removeObject(this);
-            return;
-        }
         
         walkStart--;
         if (walkStart <= 0) {
@@ -68,6 +62,8 @@ public class Zombie extends Actor {
                 die();
             }
         }
+        
+        
     }
     
     private void updateState() {

@@ -17,20 +17,25 @@ public class MyWorld extends World {
     int amountOfZombiesToSpawn = 1;
     
     SunDisplay currentDisplay = null;
-    
+    private boolean gameOver = false; 
     public MyWorld() {
         super(950, 600, 1, false);
+        
         drawBackground();
         drawLawn();
         drawLawnmowers();
         drawSeedSlots();
+        
     }
     int count = 0;
     public void act() {
+        
         updateMousePosition();
         spawnSun();
         placePlant();
-        spawnZombies();
+        if (!gameOver) {
+            spawnZombies();
+        }
         Sun suns = new Sun();
         int sunAmnt = suns.getSun();
         if (currentDisplay != null) {
@@ -39,6 +44,20 @@ public class MyWorld extends World {
         SunDisplay sunDisplay = new SunDisplay("Suns: " + sunAmnt, 25, Color.YELLOW, Color.BLACK);
         addObject(sunDisplay, 100,100);
         currentDisplay = sunDisplay;
+        
+        checkGameOver();
+    }
+    
+    private void checkGameOver(){
+        List<Zombie> zombies = getObjects(Zombie.class);
+        for(int i = 0; i<zombies.size(); i++){
+            Zombie zombie = zombies.get(i);
+            if(zombie.getX() <= 0){
+                gameOver = true;
+                addObject(new GameOverScreen(), getWidth() / 2, getHeight() / 2);
+                return;
+            }
+        }
     }
     private void drawBackground() {
         int tileColor = 1;
