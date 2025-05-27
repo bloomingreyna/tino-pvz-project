@@ -44,16 +44,21 @@ public class PotatoMine extends Plant
                 count2 = 0;
             }
             health = 100;
-            if (isTouching(Zombie.class)) {
-                List<Zombie> exploded = getObjectsInRange(200, Zombie.class);
-                for (int i = 0; i < exploded.size(); i++) {
+            
+            Actor zombie = getOneIntersectingObject(Zombie.class);
+            if (zombie != null) {
+                Zombie z = (Zombie) zombie;
+                if (z.row == row);
+                    List<Zombie> exploded = getObjectsInRange(200, Zombie.class);
+                    for (int i = 0; i < exploded.size(); i++) {
                     Zombie zomb = exploded.get(i);
                     if (zomb.row == row) {
                         zomb.die();
                         //make some exploding ainmation here
-                        getWorld().removeObject(this);
-                        this.tile.setPlant(null);
+                        
                     }
+                    getWorld().removeObject(this);
+                    this.tile.setPlant(null);
                 }
             }
         }
