@@ -16,7 +16,7 @@ public class Iceburg extends Plant
     public Iceburg(int row, int col) {
         super(row, col);
         this.sunCost = 75;
-        this.rechargeTime = 1200;
+        this.rechargeTime = 1800;
         this.startCharge = false;
     }
     public void act()
