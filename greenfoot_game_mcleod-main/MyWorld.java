@@ -22,8 +22,6 @@ public class MyWorld extends World {
     private boolean gameOver = false;
     public MyWorld() {
         super(950, 600, 1, false);
-
-        
         if (start == false) {
             
             addObject(title,getWidth()/2,getHeight()/2);
