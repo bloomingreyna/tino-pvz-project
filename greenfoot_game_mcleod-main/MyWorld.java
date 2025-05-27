@@ -9,7 +9,7 @@ public class MyWorld extends World {
     public static SeedSlot selectedSlot = null;
     public boolean start = false;
     
-    int gracePeriod = 1680;
+    int gracePeriod = 1560;
     int waveMaxGap = 1200;
     int waveGap = 0;
     int maxZombieIncreaseGap = 4;
@@ -84,7 +84,7 @@ public class MyWorld extends World {
         gameOver = false;
         start = true;
         
-        gracePeriod = 1680;
+        gracePeriod = 1560;
         waveMaxGap = 1200;
         waveGap = 0;
         maxZombieIncreaseGap = 4;
