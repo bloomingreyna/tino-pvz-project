@@ -16,18 +16,20 @@ public class Cherrybomb extends Plant
     int count = 0;
     
     private GreenfootImage debugBall = new GreenfootImage("ball.png");
-    final int BLAST_RADIUS = 135;
+    final int BLAST_RADIUS = 180;
     
     public Cherrybomb(int row, int col) {
         super(row, col);
         this.sunCost = 150;
-        this.rechargeTime = 3000;
+        this.rechargeTime = 3000
+        ;
         this.startCharge = true;
     }
     
     public void act()
     {
         // Add your action code here.
+        
         if (count >= 60) {
             List<Zombie> zombsExploded = getObjectsInRange(BLAST_RADIUS, Zombie.class);
             
@@ -37,6 +39,10 @@ public class Cherrybomb extends Plant
             getWorld().removeObject(this);
             this.tile.setPlant(null);
         }
+        
+        
+        
+        
         count++;
     }
 }
