@@ -29,12 +29,14 @@ public class Zombie extends Actor {
     protected int row = -1;
     protected int col = -1;
     
+    protected boolean frozen = false;
+    
     private int sensorX;
     private int sensorY;
     
     private int walkStart = Greenfoot.getRandomNumber(75);
     private boolean active = false;
-    
+    int freezeCount = 0;
     public Zombie(int row) {
         this.moveDuration = moveDurationMax;
         this.stopDuration = stopDurationMax;
@@ -74,7 +76,9 @@ public class Zombie extends Actor {
                 die();
             }
         }
-        
+        if (this.frozen) {
+            freeze();
+        }
         
     }
     
@@ -159,6 +163,10 @@ public class Zombie extends Actor {
         return health;
     }
     
+    public void setFrozen(boolean f) {
+        this.frozen = f;
+    }
+    
     public void setHealth(int health) {
         this.health = health;
     }
@@ -178,7 +186,20 @@ public class Zombie extends Actor {
     public void slow() {
         slowTime = slowTimeMax;
     }
-    
+    public void freeze() {
+        setImage("FrozenZombie.png");
+        getImage().scale(100,100);
+        speed = 0;
+        if (freezeCount >= 600) {
+            speed = -1;
+            setImage("ezgif-89690f8ebfb687.png");
+            getImage().scale(100,100);
+        }
+        freezeCount++;
+    }
+    public void thaw() {
+        speed = -1;
+    }
     public boolean isActive() {
         return active;
     }
