@@ -7,7 +7,7 @@ public class MyWorld extends World {
     public static int mouseRow = -1;
     public static int mouseCol = -1;
     public static SeedSlot selectedSlot = null;
-    
+    public boolean start = false;
     int gracePeriod = 1500;
     int waveMaxGap = 1020;
     int waveGap = 0;
@@ -17,30 +17,64 @@ public class MyWorld extends World {
     int amountOfZombiesToSpawn = 1;
     
     SunDisplay currentDisplay = null;
-    
+
+    TitleScreen title = new TitleScreen();
+    private boolean gameOver = false;
     public MyWorld() {
         super(950, 600, 1, false);
-        Sun.sun = 50;
-        
-        drawBackground();
-        drawLawn();
-        drawLawnmowers();
-        drawSeedSlots();
+        if (start == false) {
+            
+            addObject(title,getWidth()/2,getHeight()/2);
+        } 
     }
+    
     int count = 0;
+    
     public void act() {
-        updateMousePosition();
-        spawnSun();
-        placePlant();
-        spawnZombies();
-        Sun suns = new Sun();
-        int sunAmnt = suns.getSun();
-        if (currentDisplay != null) {
-            removeObject(currentDisplay);
+        
+
+        if (Greenfoot.isKeyDown("a") && !start) {
+            start = true;
+            removeObject(title);
+            drawBackground();
+            drawLawn();
+            drawLawnmowers();
+            drawSeedSlots();
         }
-        SunDisplay sunDisplay = new SunDisplay("Suns: " + sunAmnt, 25, Color.YELLOW, Color.BLACK);
-        addObject(sunDisplay, 100,100);
-        currentDisplay = sunDisplay;
+        if (start == true) {
+            
+            updateMousePosition();
+            spawnSun();
+            placePlant();
+            if (!gameOver) {
+                spawnZombies();
+            }
+            
+            Sun suns = new Sun();
+            int sunAmnt = suns.getSun();
+            if (currentDisplay != null) {
+                removeObject(currentDisplay);
+            }
+            
+            
+            SunDisplay sunDisplay = new SunDisplay("Suns: " + sunAmnt, 25, Color.YELLOW, Color.BLACK);
+            addObject(sunDisplay, 100,100);
+            currentDisplay = sunDisplay;
+            checkGameOver();
+        }
+    }
+    
+    private void checkGameOver(){
+        List<Zombie> zombies = getObjects(Zombie.class);
+        for(int i = 0; i<zombies.size(); i++){
+            Zombie zombie = zombies.get(i);
+            if(zombie.getX() <= 0){
+                gameOver = true;
+                addObject(new GameOverScreen(), getWidth() / 2, getHeight() / 2);
+                return;
+            }
+        }
+
     }
     private void drawBackground() {
         int tileColor = 1;
@@ -56,6 +90,7 @@ public class MyWorld extends World {
             }
         }
     }
+    
     private void spawnZombies() {
         gracePeriod--;
         if (gracePeriod <= 0) {

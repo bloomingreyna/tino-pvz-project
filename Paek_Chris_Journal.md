@@ -12,4 +12,10 @@ Tues May 6 in class - 30 minutes
 finished Wallnut class, found various images for different classes and made them clean looking for the game, also scaled images compared to gridsquares.
 
 Tues May 13 in class - 30 minutes
-made zombie parent class and conehead subclass, made working conhead that switches to regular zombie image when falling below 200 health which is default zombie health, just like the real game. s
+made zombie parent class and conehead subclass, made working conhead that switches to regular zombie image when falling below 200 health which is default zombie health, just like the real game. 
+
+Thurs May 15 in class - 25 minutes
+fixed images, scaled, and helped implement conehead zombie and dirt background
+
+Mon May 26 at home - 30 minutes
+fixed snowpea image, implemented functioning gameOver screen whilst stopped zombie spawning, added gameover class.
