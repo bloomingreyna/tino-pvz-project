@@ -28,7 +28,13 @@ public class Pea extends Projecticle
     }
     
     protected void onHit(Zombie z) {
-        Greenfoot.playSound("splat.wav");
+        if (z.getType().equals("Browncoat")) {
+            Greenfoot.playSound("splat.wav");
+        } else if (z.getType().equals("Buckethead")) {
+            Greenfoot.playSound("shieldhit.wav");
+        } else if (z.getType().equals("Conehead")) {
+            Greenfoot.playSound("plastichit2.wav");
+        }
         z.setHealth(z.getHealth() - damage);
         getWorld().removeObject(this);
     }

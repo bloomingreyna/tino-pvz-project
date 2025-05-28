@@ -12,6 +12,7 @@ public class SeedSlot extends Actor {
     
     private Color chargedColor = new Color(194, 120, 0);
     private Color unchargedColor = new Color(89, 13, 2);
+    private Color selectedColor = new Color(124, 54, 0);
     private Color rechargeColor = new Color(255, 255, 255, 50);
     
     private GreenfootImage rechargeVisual = new GreenfootImage(70, 1);
@@ -38,12 +39,25 @@ public class SeedSlot extends Actor {
     
     public void act() {
         currentCharge += 1;
-        if (Greenfoot.mouseClicked(this) && Sun.sun >= plantRef.sunCost && currentCharge >= rechargeTime) {
-            MyWorld.selectedSlot = this;
+        if (Greenfoot.mouseClicked(this)) {
+            if (MyWorld.selectedSlot == this) {
+                MyWorld.selectedSlot = null;
+                Greenfoot.playSound("buttonclick.wav");
+                return;
+            }
+            
+            if (Sun.sun >= plantRef.sunCost && currentCharge >= rechargeTime) {
+                MyWorld.selectedSlot = this;
+                Greenfoot.playSound("seedlift.wav");
+            } else {
+                Greenfoot.playSound("buzzer.wav");
+            }
         }
         
         if (currentCharge < rechargeTime || Sun.sun < plantRef.sunCost) {
             getImage().setColor(unchargedColor);
+        } else if (MyWorld.selectedSlot == this) {
+            getImage().setColor(selectedColor);
         } else {
             getImage().setColor(chargedColor);
         }
@@ -52,6 +66,7 @@ public class SeedSlot extends Actor {
         
         rechargeVisual.scale(70, (int) Math.ceil(85.0 * (currentCharge / rechargeTime)));
         getImage().drawImage(rechargeVisual, 0, 85 - rechargeVisual.getHeight());
+        getWorld().showText(Integer.toString(plantRef.sunCost), getX() + 20, getY() + 30);
     }
     
     public Constructor getPlant() {

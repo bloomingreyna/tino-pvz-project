@@ -1,4 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import java.util.List;
 
 /**
  * Write a description of class Iceburg here.
@@ -17,22 +18,27 @@ public class Iceburg extends Plant
     boolean startCount = false;
     public Iceburg(int row, int col) {
         super(row, col);
-        this.sunCost = 75;
+        this.sunCost = 0;
         this.rechargeTime = 1800;
         this.startCharge = false;
     }
     public void act()
     {
         // Add your action code here.
+        count++;
         if (isTouching(Zombie.class)) {
-            Zombie zomb =(Zombie) getOneIntersectingObject(Zombie.class);
-            if (zomb.row == row) {
-                zomb.setFrozen(true);
-                
-                
-                //do icy explosion animation here
-                getWorld().removeObject(this);
-                this.tile.setPlant(null);
+            List<Zombie> zomb = getIntersectingObjects(Zombie.class);
+            
+            for (int i = 0; i < zomb.size(); i++) {
+                Zombie z = zomb.get(i);
+                if (z.row == row && count >= 45 && z.frozen == false) {
+                    z.setFrozen(true);
+                    z.freezeCount = 0;
+                    Greenfoot.playSound("frozen.wav");
+                    getWorld().removeObject(this);
+                    this.tile.setPlant(null);
+                    return;
+                }
             }
         }
         

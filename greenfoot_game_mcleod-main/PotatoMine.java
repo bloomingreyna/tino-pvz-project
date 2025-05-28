@@ -15,6 +15,7 @@ public class PotatoMine extends Plant
     int health = 99999;
     int count = 0;
     int count2 = 99;
+    boolean risen = false;
     public PotatoMine (int row, int col) {
         super(row,col);
         this.sunCost = 25;
@@ -26,13 +27,16 @@ public class PotatoMine extends Plant
     {
         // Add your action code here.
         count++;
-        if (count < 900) {
+        if (count < 600) {
             setImage("PotatoMineUnarmed.png");
             getImage().scale(50,50);
         }
-        if (count >= 900) {
+        if (count >= 600) {
             //change image;
-            
+            if (!risen) {
+                risen = true;
+                Greenfoot.playSound("dirt_rise.wav");
+            }
             count2++;
             if (count2 == 100) {
                 setImage("PotatoMineRed.png");
@@ -59,6 +63,7 @@ public class PotatoMine extends Plant
                     }
                 
                 }
+                Greenfoot.playSound("potato_mine.wav");
                 getWorld().removeObject(this);
                 this.tile.setPlant(null);
             }
