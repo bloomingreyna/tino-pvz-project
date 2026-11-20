@@ -2,4 +2,4 @@ This is a project from my senior year of high school in which I was tasked to wo
 
 Note that this is not the original repository, but rather a clone of the private repository from the GitHub organization created for my high school at the time. Regardless, aside from the contents of this README, the source code and project history is entirely untouched, leaving only the final result as it was in 2025 (rough edges and all).
 
-To run it, install [https://www.greenfoot.org](Greenfoot) from the official website, then open the **greenfoot_game_mcleod-main** folder once inside the application.
+To run it, install [Greenfoot](https://www.greenfoot.org) from the official website, then open the **greenfoot_game_mcleod-main** folder once inside the application.
